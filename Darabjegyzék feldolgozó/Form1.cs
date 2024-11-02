@@ -1,12 +1,17 @@
 using Darabjegyzék_feldolgozó.Database;
+using Darabjegyzék_feldolgozó.Factories.Statistics.Counter.Linear;
 using Darabjegyzék_feldolgozó.GUI;
+using Darabjegyzék_feldolgozó.GUI.CommonListing;
 using System.Windows.Forms;
 
 namespace Darabjegyzék_feldolgozó
 {
     public partial class Form1 : Form
     {
-        private BomLister lister;
+        private BomTreePrinter bomlister;
+        private LevelTreePrinter levellister;
+        private CommonPrinter commonlister;
+        private BomHandlerMenu bomhandlermenu;
         private DatabaseInterface databaseInterface;
 
         public Form1()
@@ -19,8 +24,9 @@ namespace Darabjegyzék_feldolgozó
         {
             try
             {
-                databaseInterface.fillthelist(textBox1.Text);
+                databaseInterface.addNew(textBox1.Text);
                 MessageBox.Show("The file is successfully loaded.");
+                dotheredraw(Controls[0].GetType());
             }
             catch (Exception ex)
             {
@@ -30,18 +36,47 @@ namespace Darabjegyzék_feldolgozó
 
         private void textBox1_doubleclick(object sender, EventArgs e)
         {
-            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            try
             {
-                openFileDialog.InitialDirectory = "c:\\";
-                openFileDialog.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
-                openFileDialog.FilterIndex = 2;
-                openFileDialog.RestoreDirectory = true;
-
-                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                using (OpenFileDialog openFileDialog = new OpenFileDialog())
                 {
-                    textBox1.Text = openFileDialog.FileName;
-                    databaseInterface.fillthelist(openFileDialog.FileName);
+                    openFileDialog.InitialDirectory = Path.GetDirectoryName(Application.ExecutablePath);
+                    openFileDialog.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
+                    openFileDialog.FilterIndex = 2;
+                    openFileDialog.RestoreDirectory = true;
+
+                    if (openFileDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        textBox1.Text = openFileDialog.FileName;
+                        databaseInterface.addNew(openFileDialog.FileName);
+                        MessageBox.Show("The file is successfully loaded.");
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            dotheredraw(Controls[0].GetType());
+        }
+
+        private void dotheredraw(Type zero)
+        {
+            if(bomlister != null && zero == bomlister.GetType())
+            {
+                bomlister.Printthis(databaseInterface);
+            }
+            else if (levellister != null &&  zero == levellister.GetType())
+            {
+                levellister.Printthis(databaseInterface);
+            }
+            else if (commonlister != null && zero == commonlister.GetType())
+            {
+                commonlister.Printthis(databaseInterface);
+            }
+            else if (bomhandlermenu != null && zero == bomhandlermenu.GetType())
+            {
+                bomhandlermenu.Printthis(databaseInterface);
             }
         }
 
@@ -50,21 +85,56 @@ namespace Darabjegyzék_feldolgozó
             panel1.Width = Width - 10;
             textBox1.Width = panel1.Width - 120;
             button1.Location = new Point(textBox1.Width + textBox1.Location.X + 10, button1.Location.Y);
-            if(Controls.Contains(lister))
-            {
-                lister.Resizer(Height,Width);
-            }    
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            if (!Controls.Contains(lister))
+            if (!Controls.Contains(bomlister))
             {
-                lister = new BomLister(databaseInterface);
-                Controls.Add(lister);
-                lister.Location = new Point(96, 47);
+                bomlister = new BomTreePrinter();
+                Controls.Add(bomlister);
+                Resize += bomlister.Resizer;
+
             }
-            lister.BringToFront();
+            bomlister.Printthis(databaseInterface);
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            if (!Controls.Contains(levellister))
+            {
+                levellister = new LevelTreePrinter();
+                Controls.Add(levellister);
+                Resize += levellister.Resizer;
+            }
+            levellister.Printthis(databaseInterface);
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            if (!Controls.Contains(commonlister))
+            {
+                commonlister = new CommonPrinter();
+                Controls.Add(commonlister);
+                Resize += commonlister.Resizer;
+            }
+            commonlister.Printthis(databaseInterface);
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            if (!Controls.Contains(bomhandlermenu))
+            {
+                bomhandlermenu = new BomHandlerMenu();
+                Controls.Add(bomhandlermenu);
+                Resize += bomhandlermenu.Resizer;
+            }
+            bomhandlermenu.Printthis(databaseInterface);
         }
     }
 }

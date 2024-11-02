@@ -4,13 +4,15 @@ using System.Linq;
 using System.Reflection.PortableExecutable;
 using System.Text;
 using System.Threading.Tasks;
-using Darabjegyzék_feldolgozó.Database.Types;
+using Darabjegyzék_feldolgozó.Database.Types.Machines;
 
 namespace Darabjegyzék_feldolgozó.Database
 {
     public interface DatabaseInterface
     {
-        List<DMachine> GetDatabase { get; }
-        void fillthelist(string path);
+        List<DMachine> Machines { get; }
+        void addNew(string path);
+        void removeThis(string id);
+        void removeThis(int index);
     }
 }

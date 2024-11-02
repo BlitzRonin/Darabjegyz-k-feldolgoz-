@@ -1,6 +1,6 @@
 ﻿namespace Darabjegyzék_feldolgozó.GUI
 {
-    partial class BomLister
+    partial class LevelTreePrinter
     {
         /// <summary> 
         /// Required designer variable.
@@ -28,16 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            treeView1 = new TreeView();
             label1 = new Label();
+            treeView1 = new TreeView();
+            treeView2 = new TreeView();
             SuspendLayout();
-            // 
-            // treeView1
-            // 
-            treeView1.Location = new Point(3, 36);
-            treeView1.Name = "treeView1";
-            treeView1.Size = new Size(686, 456);
-            treeView1.TabIndex = 0;
             // 
             // label1
             // 
@@ -45,26 +39,41 @@
             label1.Font = new Font("Sitka Text", 12F, FontStyle.Bold, GraphicsUnit.Point, 238);
             label1.Location = new Point(3, 10);
             label1.Name = "label1";
-            label1.Size = new Size(116, 23);
-            label1.TabIndex = 1;
-            label1.Text = "Gépek listája";
+            label1.Size = new Size(126, 23);
+            label1.TabIndex = 2;
+            label1.Text = "Szintek listája";
             // 
-            // BomLister
+            // treeView1
+            // 
+            treeView1.Location = new Point(3, 36);
+            treeView1.Name = "treeView1";
+            treeView1.Size = new Size(222, 456);
+            treeView1.TabIndex = 3;
+            // 
+            // treeView2
+            // 
+            treeView2.Location = new Point(231, 36);
+            treeView2.Name = "treeView2";
+            treeView2.Size = new Size(458, 456);
+            treeView2.TabIndex = 4;
+            // 
+            // LevelTreePrinter
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            Controls.Add(label1);
+            Controls.Add(treeView2);
             Controls.Add(treeView1);
-            Name = "BomLister";
+            Controls.Add(label1);
+            Location = new Point(96, 47);
+            Name = "LevelTreePrinter";
             Size = new Size(692, 495);
-            Load += BomLister_Load;
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
-
-        private TreeView treeView1;
         private Label label1;
+        private TreeView treeView1;
+        private TreeView treeView2;
     }
 }

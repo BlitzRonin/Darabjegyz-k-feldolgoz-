@@ -82,8 +82,9 @@
             button3.Name = "button3";
             button3.Size = new Size(75, 52);
             button3.TabIndex = 4;
-            button3.Text = "Statistics";
+            button3.Text = "Szint kimutatás";
             button3.UseVisualStyleBackColor = true;
+            button3.Click += button3_Click;
             // 
             // button4
             // 
@@ -91,8 +92,9 @@
             button4.Name = "button4";
             button4.Size = new Size(75, 52);
             button4.TabIndex = 5;
-            button4.Text = "Statistics";
+            button4.Text = "Bom Gyakoriság";
             button4.UseVisualStyleBackColor = true;
+            button4.Click += button4_Click;
             // 
             // button5
             // 
@@ -102,6 +104,7 @@
             button5.TabIndex = 6;
             button5.Text = "Statistics";
             button5.UseVisualStyleBackColor = true;
+            button5.Click += button5_Click;
             // 
             // button6
             // 
@@ -109,8 +112,9 @@
             button6.Name = "button6";
             button6.Size = new Size(75, 52);
             button6.TabIndex = 7;
-            button6.Text = "Felépítés";
+            button6.Text = "Kezelés";
             button6.UseVisualStyleBackColor = true;
+            button6.Click += button6_Click;
             // 
             // Form1
             // 
@@ -123,6 +127,7 @@
             Controls.Add(button3);
             Controls.Add(button2);
             Controls.Add(panel1);
+            MinimumSize = new Size(473, 452);
             Name = "Form1";
             Text = "Darabjegyzék feldolgozása";
             Resize += on_Resize;

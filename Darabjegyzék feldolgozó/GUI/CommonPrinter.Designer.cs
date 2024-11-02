@@ -1,6 +1,6 @@
-﻿namespace Darabjegyzék_feldolgozó.GUI
+﻿namespace Darabjegyzék_feldolgozó.GUI.CommonListing
 {
-    partial class BomLister
+    partial class CommonPrinter
     {
         /// <summary> 
         /// Required designer variable.
@@ -37,7 +37,7 @@
             treeView1.Location = new Point(3, 36);
             treeView1.Name = "treeView1";
             treeView1.Size = new Size(686, 456);
-            treeView1.TabIndex = 0;
+            treeView1.TabIndex = 1;
             // 
             // label1
             // 
@@ -45,19 +45,19 @@
             label1.Font = new Font("Sitka Text", 12F, FontStyle.Bold, GraphicsUnit.Point, 238);
             label1.Location = new Point(3, 10);
             label1.Name = "label1";
-            label1.Size = new Size(116, 23);
-            label1.TabIndex = 1;
-            label1.Text = "Gépek listája";
+            label1.Size = new Size(209, 23);
+            label1.TabIndex = 2;
+            label1.Text = "Alkatrészek előfordulása";
             // 
-            // BomLister
+            // CommonPrinter
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(label1);
             Controls.Add(treeView1);
-            Name = "BomLister";
+            Location = new Point(96, 47);
+            Name = "CommonPrinter";
             Size = new Size(692, 495);
-            Load += BomLister_Load;
             ResumeLayout(false);
             PerformLayout();
         }
