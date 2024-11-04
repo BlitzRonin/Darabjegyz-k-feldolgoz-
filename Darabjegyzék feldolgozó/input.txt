@@ -1,8 +1,0 @@
-AZ4375-789-10
-1.szint-Szerelési szint 1
-2.szint-Beépülő elem 1
-2.szint-Beépülő elem 2
-3.szint-Beépülő elem 2-be épülő 1sz. alkatrész
-3.szint-Beépülő elem 2-be épülő 2sz. alaktrész
-1.szint-Szerelési szint 2
-2.szint-Beépülő elem 1

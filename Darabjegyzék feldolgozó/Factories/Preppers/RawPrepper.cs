@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace Darabjegyzék_feldolgozó.Factories.Preppers
 {
+    //This class creates the Raws from the File
     public class RawPrepper : IDisposable
     {
         private DMachine prepared;
@@ -82,6 +83,8 @@ namespace Darabjegyzék_feldolgozó.Factories.Preppers
             return temp;
         }
 
+
+        //This method makes sure the machine name cannotbe duplicated as it is the unique id of the the BOM
         private string noduplic(string id,List<DMachine> listsofar)
         {
             int count;
@@ -91,7 +94,7 @@ namespace Darabjegyzék_feldolgozó.Factories.Preppers
             }
             return id;
         }
-
+        //This method counts how much duplicate there is
         private int countduplic(string id, List<DMachine> listsofar)
         {
             int count = 0;

@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace Darabjegyzék_feldolgozó.Factories.Statistics
 {
+    //This class counts how many instances of distinct elements are in a bom and on wich level
     public class CommonCounter : IDisposable
     {
         private List<Raw> @interface;

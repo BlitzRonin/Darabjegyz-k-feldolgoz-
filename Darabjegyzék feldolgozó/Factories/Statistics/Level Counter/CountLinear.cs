@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace Darabjegyzék_feldolgozó.Factories.Statistics.Counter.Linear
 {
+    //This Class counts the Levels in a Raw
     public class CountLinear : IDisposable
     {
         private List<Raw> @interface;

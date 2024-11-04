@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 namespace Darabjegyzék_feldolgozó.Database.Types.Statistics
 {
+    //This type contain and manages the counting of all levels in a BOM
+
     public class Countlevels
     {
         public int Level { get; }

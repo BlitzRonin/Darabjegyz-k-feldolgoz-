@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Darabjegyzék_feldolgozó.Database.Types.Statistics
 {
+    //This type contains the commonality data of each distinct elements
     public class CountCommon
     {
         public string Id { get; }
-
         public bool Zero { get; }
         public Dictionary<int,int> Levels { get { return levels; } }
 

@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace Darabjegyzék_feldolgozó.Factories.Preppers
 {
+    //This class creates the Relational tree from the Raws
     public class BomPrepper : IDisposable
     {
         private List<Part> prepared;
@@ -31,6 +32,7 @@ namespace Darabjegyzék_feldolgozó.Factories.Preppers
             int clevel = 1;
             do
             {
+                // because the last one of the lements are always on the correct level we can expect that even if its a zero leveled one it can be inserted if we look at the last level
                 if (thispart.Level == clevel || thispart.Level == 0 && lastone == clevel)
                 {
                     if (currentpart == null)

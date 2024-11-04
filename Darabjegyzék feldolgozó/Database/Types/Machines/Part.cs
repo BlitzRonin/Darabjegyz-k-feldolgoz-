@@ -8,6 +8,8 @@ namespace Darabjegyzék_feldolgozó.Database.Types.Machines
 {
     public class Part : Raw
     {
+        //The Treeified version of Type Raw, this type adds relations
+
         public List<Part> Parts;
 
         public Part(int level, int item, double quantity, string um, string id, int kind, int ptyp, DateTime? validfrom, DateTime? validto, string serial) : base(level,item,quantity,um,id,kind,ptyp,validfrom,validto,serial)

@@ -8,6 +8,8 @@ namespace Darabjegyzék_feldolgozó.Database.Types.Machines
 {
     public class Raw
     {
+        //The Raw part Type, essentially contains a BOM element in itself does not contains relations
+
         public int Level { get; }
         public int Item { get; }
         public double Quantity { get; }

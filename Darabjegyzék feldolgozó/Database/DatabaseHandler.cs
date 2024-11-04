@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Reflection.PortableExecutable;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,6 +12,8 @@ using Darabjegyzék_feldolgozó.Factories.Preppers;
 
 namespace Darabjegyzék_feldolgozó.Database
 {
+    //This Class is the Connection between the database and the Execution Layers
+
     public class DatabaseHandler : DatabaseInterface
     {
         public List<DMachine> Machines { get { return machines; } }
@@ -37,25 +40,18 @@ namespace Darabjegyzék_feldolgozó.Database
             }
         }
 
-        public void addNew(string path)
-        {
-            addRaw(path);
-        }
+        //Adds a new BOM into the program
 
-        private void addRaw(string path)
+        public void addNew(string path)
         {
             using (RawPrepper prepit = new RawPrepper())
             {
-                machines.Add(prepit.prepper(path,machines));
+                machines.Add(prepit.prepper(path, machines));
             }
-            alterrations();
+            addTree(machines.Count-1);
         }
 
-        private void alterrations()
-        {
-            int thisone = machines.Count - 1;
-            addTree(thisone);
-        }
+        //Makes the BOM relational with the inclusion of pointers to its child nodes
 
         private void addTree(int index)
         {

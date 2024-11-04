@@ -9,6 +9,7 @@ using System.Xml.Linq;
 
 namespace Darabjegyzék_feldolgozó.Database.Types.Machines
 {
+    // The Type of all BOM Files
     public class DMachine
     {
         public bool Active { get; set; }
@@ -23,8 +24,6 @@ namespace Darabjegyzék_feldolgozó.Database.Types.Machines
             Id = id;
             Active = true;
         }
-
-
 
         public void AddRaw(int level, int item, double quantity, string um, string id, int kind, int ptyp, DateTime? validfrom, DateTime? validto, string serial)
         {

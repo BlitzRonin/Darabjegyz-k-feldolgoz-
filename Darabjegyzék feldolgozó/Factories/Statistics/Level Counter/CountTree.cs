@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace Darabjegyzék_feldolgozó.Factories.Statistics.Counter.Tree
 {
+    //This class counts the levels individually and reletaionally binds them
     public class CountTree : IDisposable
     {
         private List<CountNode> basecount;
