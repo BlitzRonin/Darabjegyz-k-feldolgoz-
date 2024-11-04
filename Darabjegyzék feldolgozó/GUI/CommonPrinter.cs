@@ -61,6 +61,15 @@ namespace Darabjegyzék_feldolgozó.GUI.CommonListing
             {
                 line += "Level " + thiscommon.Levels.ElementAt(i).Key + ": " + thiscommon.Levels.ElementAt(i).Value + "; ";
             }
+            line += "Zero?: ";
+            if (thiscommon.Zero)
+            {
+                line += "Yes;";
+            }
+            else
+            {
+                line += "No;";
+            }
             part.Nodes.Add(line);
 
         }

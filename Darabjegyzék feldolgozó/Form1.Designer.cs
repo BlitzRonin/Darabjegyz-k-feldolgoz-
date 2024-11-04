@@ -34,7 +34,6 @@
             button2 = new Button();
             button3 = new Button();
             button4 = new Button();
-            button5 = new Button();
             button6 = new Button();
             panel1.SuspendLayout();
             SuspendLayout();
@@ -96,19 +95,9 @@
             button4.UseVisualStyleBackColor = true;
             button4.Click += button4_Click;
             // 
-            // button5
-            // 
-            button5.Location = new Point(15, 274);
-            button5.Name = "button5";
-            button5.Size = new Size(75, 52);
-            button5.TabIndex = 6;
-            button5.Text = "Statistics";
-            button5.UseVisualStyleBackColor = true;
-            button5.Click += button5_Click;
-            // 
             // button6
             // 
-            button6.Location = new Point(15, 347);
+            button6.Location = new Point(15, 274);
             button6.Name = "button6";
             button6.Size = new Size(75, 52);
             button6.TabIndex = 7;
@@ -120,9 +109,8 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 554);
+            ClientSize = new Size(800, 548);
             Controls.Add(button6);
-            Controls.Add(button5);
             Controls.Add(button4);
             Controls.Add(button3);
             Controls.Add(button2);
@@ -144,7 +132,6 @@
         private Button button2;
         private Button button3;
         private Button button4;
-        private Button button5;
         private Button button6;
     }
 }

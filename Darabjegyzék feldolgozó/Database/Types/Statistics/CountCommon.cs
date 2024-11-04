@@ -9,6 +9,8 @@ namespace Darabjegyzék_feldolgozó.Database.Types.Statistics
     public class CountCommon
     {
         public string Id { get; }
+
+        public bool Zero { get; }
         public Dictionary<int,int> Levels { get { return levels; } }
 
         private Dictionary<int, int> levels;
@@ -17,7 +19,15 @@ namespace Darabjegyzék_feldolgozó.Database.Types.Statistics
         {
             Id = id;
             levels = new Dictionary<int, int>();
-            countit(level);
+            if(level != 0)
+            {
+                countit(level);
+                Zero = false;
+            }
+            else
+            {
+                Zero = true;
+            }
         }
 
         public void countit(int level)
