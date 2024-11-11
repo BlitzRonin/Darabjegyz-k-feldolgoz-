@@ -20,9 +20,10 @@ namespace Darabjegyzék_feldolgozó.GUI
             InitializeComponent();
         }
 
-        public void Printthis(DatabaseInterface @interface)
+        public void Printthis(DatabaseInterface @interface,Size formsize)
         {
             this.@interface = @interface;
+            setsize(formsize);
             filltree();
             BringToFront();
         }
@@ -39,7 +40,11 @@ namespace Darabjegyzék_feldolgozó.GUI
 
         public void Resizer(object sender, EventArgs e)
         {
-            Size formsize = ((Form1)sender).Size;
+            setsize(((Form1)sender).Size);
+        }
+
+        private void setsize(Size formsize)
+        {
             Size = new Size(formsize.Width - Location.X - 10, formsize.Height - Location.Y - 10);
             treeView1.Size = new Size(((Size.Width - treeView1.Location.X - 10) * 25) / 100, Size.Height - treeView1.Location.Y - 40);
             treeView2.Location = new Point(treeView1.Location.X + treeView1.Width + 10, treeView2.Location.Y);

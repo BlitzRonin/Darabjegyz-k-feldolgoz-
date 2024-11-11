@@ -55,7 +55,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(label1);
             Controls.Add(treeView1);
-            Location = new Point(96, 47);
+            Location = new Point(12, 27);
             Name = "BomTreePrinter";
             Size = new Size(692, 495);
             ResumeLayout(false);

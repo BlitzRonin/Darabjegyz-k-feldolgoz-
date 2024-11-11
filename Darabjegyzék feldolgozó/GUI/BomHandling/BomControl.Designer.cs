@@ -48,9 +48,9 @@
             // 
             button1.BackColor = Color.LightGreen;
             button1.Dock = DockStyle.Right;
-            button1.Location = new Point(413, 0);
+            button1.Location = new Point(411, 0);
             button1.Name = "button1";
-            button1.Size = new Size(72, 40);
+            button1.Size = new Size(72, 38);
             button1.TabIndex = 1;
             button1.Text = "Aktív";
             button1.UseVisualStyleBackColor = false;
@@ -60,9 +60,9 @@
             // 
             button2.BackColor = SystemColors.Control;
             button2.Dock = DockStyle.Right;
-            button2.Location = new Point(338, 0);
+            button2.Location = new Point(336, 0);
             button2.Name = "button2";
-            button2.Size = new Size(75, 40);
+            button2.Size = new Size(75, 38);
             button2.TabIndex = 2;
             button2.Text = "Törlés";
             button2.UseVisualStyleBackColor = false;
@@ -81,12 +81,13 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            BorderStyle = BorderStyle.FixedSingle;
             Controls.Add(label2);
             Controls.Add(button2);
             Controls.Add(button1);
             Controls.Add(label1);
             Name = "BomControl";
-            Size = new Size(485, 40);
+            Size = new Size(483, 38);
             ResumeLayout(false);
             PerformLayout();
         }

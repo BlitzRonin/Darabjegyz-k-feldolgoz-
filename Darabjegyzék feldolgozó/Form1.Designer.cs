@@ -28,110 +28,126 @@
         /// </summary>
         private void InitializeComponent()
         {
-            button1 = new Button();
-            textBox1 = new TextBox();
-            panel1 = new Panel();
-            button2 = new Button();
-            button3 = new Button();
-            button4 = new Button();
-            button6 = new Button();
-            panel1.SuspendLayout();
+            menuStrip1 = new MenuStrip();
+            fToolStripMenuItem = new ToolStripMenuItem();
+            newBomToolStripMenuItem = new ToolStripMenuItem();
+            manageBomToolStripMenuItem = new ToolStripMenuItem();
+            dataToolStripMenuItem = new ToolStripMenuItem();
+            rawToolStripMenuItem = new ToolStripMenuItem();
+            treeToolStripMenuItem = new ToolStripMenuItem();
+            statisticsToolStripMenuItem = new ToolStripMenuItem();
+            bOMGyakoriságToolStripMenuItem = new ToolStripMenuItem();
+            szintKimutatásToolStripMenuItem = new ToolStripMenuItem();
+            bOMÖsszehasonlításToolStripMenuItem = new ToolStripMenuItem();
+            menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
-            // button1
+            // menuStrip1
             // 
-            button1.Location = new Point(698, 3);
-            button1.Name = "button1";
-            button1.Size = new Size(75, 23);
-            button1.TabIndex = 0;
-            button1.Text = "Open";
-            button1.UseVisualStyleBackColor = true;
-            button1.Click += button1_Click;
+            menuStrip1.Items.AddRange(new ToolStripItem[] { fToolStripMenuItem, dataToolStripMenuItem, statisticsToolStripMenuItem });
+            menuStrip1.Location = new Point(0, 0);
+            menuStrip1.Name = "menuStrip1";
+            menuStrip1.Size = new Size(800, 24);
+            menuStrip1.TabIndex = 8;
+            menuStrip1.Text = "menuStrip1";
             // 
-            // textBox1
+            // fToolStripMenuItem
             // 
-            textBox1.Location = new Point(3, 3);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(689, 23);
-            textBox1.TabIndex = 1;
-            textBox1.DoubleClick += textBox1_doubleclick;
+            fToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { newBomToolStripMenuItem, manageBomToolStripMenuItem });
+            fToolStripMenuItem.Name = "fToolStripMenuItem";
+            fToolStripMenuItem.Size = new Size(37, 20);
+            fToolStripMenuItem.Text = "File";
             // 
-            // panel1
+            // newBomToolStripMenuItem
             // 
-            panel1.Controls.Add(button1);
-            panel1.Controls.Add(textBox1);
-            panel1.Location = new Point(12, 12);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(776, 29);
-            panel1.TabIndex = 2;
+            newBomToolStripMenuItem.Name = "newBomToolStripMenuItem";
+            newBomToolStripMenuItem.Size = new Size(145, 22);
+            newBomToolStripMenuItem.Text = "New Bom";
+            newBomToolStripMenuItem.Click += newBomToolStripMenuItem_Click;
             // 
-            // button2
+            // manageBomToolStripMenuItem
             // 
-            button2.Location = new Point(15, 61);
-            button2.Name = "button2";
-            button2.Size = new Size(75, 52);
-            button2.TabIndex = 3;
-            button2.Text = "Listázás";
-            button2.UseVisualStyleBackColor = true;
-            button2.Click += button2_Click;
+            manageBomToolStripMenuItem.Name = "manageBomToolStripMenuItem";
+            manageBomToolStripMenuItem.Size = new Size(145, 22);
+            manageBomToolStripMenuItem.Text = "Manage Bom";
+            manageBomToolStripMenuItem.Click += manageBomToolStripMenuItem_Click;
             // 
-            // button3
+            // dataToolStripMenuItem
             // 
-            button3.Location = new Point(15, 131);
-            button3.Name = "button3";
-            button3.Size = new Size(75, 52);
-            button3.TabIndex = 4;
-            button3.Text = "Szint kimutatás";
-            button3.UseVisualStyleBackColor = true;
-            button3.Click += button3_Click;
+            dataToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { rawToolStripMenuItem, treeToolStripMenuItem });
+            dataToolStripMenuItem.Name = "dataToolStripMenuItem";
+            dataToolStripMenuItem.Size = new Size(43, 20);
+            dataToolStripMenuItem.Text = "Data";
             // 
-            // button4
+            // rawToolStripMenuItem
             // 
-            button4.Location = new Point(15, 202);
-            button4.Name = "button4";
-            button4.Size = new Size(75, 52);
-            button4.TabIndex = 5;
-            button4.Text = "Bom Gyakoriság";
-            button4.UseVisualStyleBackColor = true;
-            button4.Click += button4_Click;
+            rawToolStripMenuItem.Name = "rawToolStripMenuItem";
+            rawToolStripMenuItem.Size = new Size(180, 22);
+            rawToolStripMenuItem.Text = "Raw";
+            rawToolStripMenuItem.Click += rawToolStripMenuItem_Click;
             // 
-            // button6
+            // treeToolStripMenuItem
             // 
-            button6.Location = new Point(15, 274);
-            button6.Name = "button6";
-            button6.Size = new Size(75, 52);
-            button6.TabIndex = 7;
-            button6.Text = "Kezelés";
-            button6.UseVisualStyleBackColor = true;
-            button6.Click += button6_Click;
+            treeToolStripMenuItem.Name = "treeToolStripMenuItem";
+            treeToolStripMenuItem.Size = new Size(180, 22);
+            treeToolStripMenuItem.Text = "Tree";
+            treeToolStripMenuItem.Click += treeToolStripMenuItem_Click;
+            // 
+            // statisticsToolStripMenuItem
+            // 
+            statisticsToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { bOMGyakoriságToolStripMenuItem, szintKimutatásToolStripMenuItem, bOMÖsszehasonlításToolStripMenuItem });
+            statisticsToolStripMenuItem.Name = "statisticsToolStripMenuItem";
+            statisticsToolStripMenuItem.Size = new Size(65, 20);
+            statisticsToolStripMenuItem.Text = "Statistics";
+            // 
+            // bOMGyakoriságToolStripMenuItem
+            // 
+            bOMGyakoriságToolStripMenuItem.Name = "bOMGyakoriságToolStripMenuItem";
+            bOMGyakoriságToolStripMenuItem.Size = new Size(187, 22);
+            bOMGyakoriságToolStripMenuItem.Text = "BOM Gyakoriság";
+            bOMGyakoriságToolStripMenuItem.Click += bOMGyakoriságToolStripMenuItem_Click;
+            // 
+            // szintKimutatásToolStripMenuItem
+            // 
+            szintKimutatásToolStripMenuItem.Name = "szintKimutatásToolStripMenuItem";
+            szintKimutatásToolStripMenuItem.Size = new Size(187, 22);
+            szintKimutatásToolStripMenuItem.Text = "Szint Kimutatás";
+            szintKimutatásToolStripMenuItem.Click += szintKimutatásToolStripMenuItem_Click;
+            // 
+            // bOMÖsszehasonlításToolStripMenuItem
+            // 
+            bOMÖsszehasonlításToolStripMenuItem.Name = "bOMÖsszehasonlításToolStripMenuItem";
+            bOMÖsszehasonlításToolStripMenuItem.Size = new Size(187, 22);
+            bOMÖsszehasonlításToolStripMenuItem.Text = "BOM Összehasonlítás";
+            bOMÖsszehasonlításToolStripMenuItem.Click += bOMÖsszehasonlításToolStripMenuItem_Click;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 548);
-            Controls.Add(button6);
-            Controls.Add(button4);
-            Controls.Add(button3);
-            Controls.Add(button2);
-            Controls.Add(panel1);
+            Controls.Add(menuStrip1);
+            MainMenuStrip = menuStrip1;
             MinimumSize = new Size(473, 452);
             Name = "Form1";
             Text = "Darabjegyzék feldolgozása";
-            Resize += on_Resize;
-            panel1.ResumeLayout(false);
-            panel1.PerformLayout();
+            menuStrip1.ResumeLayout(false);
+            menuStrip1.PerformLayout();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
-
-        private Button button1;
-        private TextBox textBox1;
-        private Panel panel1;
-        private Button button2;
-        private Button button3;
-        private Button button4;
-        private Button button6;
+        private MenuStrip menuStrip1;
+        private ToolStripMenuItem fToolStripMenuItem;
+        private ToolStripMenuItem newBomToolStripMenuItem;
+        private ToolStripMenuItem manageBomToolStripMenuItem;
+        private ToolStripMenuItem dataToolStripMenuItem;
+        private ToolStripMenuItem rawToolStripMenuItem;
+        private ToolStripMenuItem treeToolStripMenuItem;
+        private ToolStripMenuItem statisticsToolStripMenuItem;
+        private ToolStripMenuItem bOMGyakoriságToolStripMenuItem;
+        private ToolStripMenuItem szintKimutatásToolStripMenuItem;
+        private ToolStripMenuItem bOMÖsszehasonlításToolStripMenuItem;
     }
 }

@@ -64,7 +64,7 @@
             Controls.Add(treeView2);
             Controls.Add(treeView1);
             Controls.Add(label1);
-            Location = new Point(96, 47);
+            Location = new Point(12, 27);
             Name = "LevelTreePrinter";
             Size = new Size(692, 495);
             ResumeLayout(false);

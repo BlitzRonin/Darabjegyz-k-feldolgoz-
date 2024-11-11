@@ -12,44 +12,60 @@ namespace Darabjegyzék_feldolgozó
         private LevelTreePrinter levellister;
         private CommonPrinter commonlister;
         private BomHandlerMenu bomhandlermenu;
+        private RawPrinter rawlister;
         private DatabaseInterface databaseInterface;
+        private string path;
 
         public Form1()
         {
             InitializeComponent();
             databaseInterface = new DatabaseHandler();
+            path = Application.StartupPath;
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void dotheredraw(Type zero)
         {
-            try
+            if (zero == typeof(BomTreePrinter))
             {
-                databaseInterface.addNew(textBox1.Text);
-                MessageBox.Show("The file is successfully loaded.");
-                dotheredraw(Controls[0].GetType());
+                bomlister.Printthis(databaseInterface, Size);
             }
-            catch (Exception ex)
+            else if (zero == typeof(LevelTreePrinter))
             {
-                MessageBox.Show(ex.Message);
+                levellister.Printthis(databaseInterface, Size);
+            }
+            else if (zero == typeof(CommonPrinter))
+            {
+                commonlister.Printthis(databaseInterface, Size);
+            }
+            else if (zero == typeof(BomHandlerMenu))
+            {
+                bomhandlermenu.Printthis(databaseInterface, Size);
+            }
+            else if (zero == typeof(RawPrinter))
+            {
+                rawlister.Printthis(databaseInterface, Size);
             }
         }
 
-        private void textBox1_doubleclick(object sender, EventArgs e)
+        private void newBomToolStripMenuItem_Click(object sender, EventArgs e)
         {
             try
             {
                 using (OpenFileDialog openFileDialog = new OpenFileDialog())
                 {
-                    openFileDialog.InitialDirectory = Path.GetDirectoryName(Application.ExecutablePath);
+                    openFileDialog.InitialDirectory = path;
+                    openFileDialog.Multiselect = true;
                     openFileDialog.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
                     openFileDialog.FilterIndex = 2;
-                    openFileDialog.RestoreDirectory = true;
 
                     if (openFileDialog.ShowDialog() == DialogResult.OK)
                     {
-                        textBox1.Text = openFileDialog.FileName;
-                        databaseInterface.addNew(openFileDialog.FileName);
+                        multiselectfiles(openFileDialog.FileNames);
                         MessageBox.Show("The file is successfully loaded.");
+                    }
+                    else
+                    {
+                        path = Application.StartupPath;
                     }
                 }
             }
@@ -60,34 +76,27 @@ namespace Darabjegyzék_feldolgozó
             dotheredraw(Controls[0].GetType());
         }
 
-        private void dotheredraw(Type zero)
+        private void multiselectfiles(string[] paths)       
         {
-            if(bomlister != null && zero == bomlister.GetType())
+            for (int i = 0;i < paths.Length ; i++)
             {
-                bomlister.Printthis(databaseInterface);
+                databaseInterface.addNew(paths[i]);
             }
-            else if (levellister != null &&  zero == levellister.GetType())
-            {
-                levellister.Printthis(databaseInterface);
-            }
-            else if (commonlister != null && zero == commonlister.GetType())
-            {
-                commonlister.Printthis(databaseInterface);
-            }
-            else if (bomhandlermenu != null && zero == bomhandlermenu.GetType())
-            {
-                bomhandlermenu.Printthis(databaseInterface);
-            }
+            path = paths[0];
         }
 
-        private void on_Resize(object sender, EventArgs e)
+        private void manageBomToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            panel1.Width = Width - 10;
-            textBox1.Width = panel1.Width - 120;
-            button1.Location = new Point(textBox1.Width + textBox1.Location.X + 10, button1.Location.Y);
+            if (!Controls.Contains(bomhandlermenu))
+            {
+                bomhandlermenu = new BomHandlerMenu();
+                Controls.Add(bomhandlermenu);
+                Resize += bomhandlermenu.Resizer;
+            }
+            bomhandlermenu.Printthis(databaseInterface, Size);
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void treeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (!Controls.Contains(bomlister))
             {
@@ -96,21 +105,10 @@ namespace Darabjegyzék_feldolgozó
                 Resize += bomlister.Resizer;
 
             }
-            bomlister.Printthis(databaseInterface);
+            bomlister.Printthis(databaseInterface, Size);
         }
 
-        private void button3_Click(object sender, EventArgs e)
-        {
-            if (!Controls.Contains(levellister))
-            {
-                levellister = new LevelTreePrinter();
-                Controls.Add(levellister);
-                Resize += levellister.Resizer;
-            }
-            levellister.Printthis(databaseInterface);
-        }
-
-        private void button4_Click(object sender, EventArgs e)
+        private void bOMGyakoriságToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (!Controls.Contains(commonlister))
             {
@@ -118,18 +116,34 @@ namespace Darabjegyzék_feldolgozó
                 Controls.Add(commonlister);
                 Resize += commonlister.Resizer;
             }
-            commonlister.Printthis(databaseInterface);
+            commonlister.Printthis(databaseInterface, Size);
         }
 
-        private void button6_Click(object sender, EventArgs e)
+        private void szintKimutatásToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (!Controls.Contains(bomhandlermenu))
+            if (!Controls.Contains(levellister))
             {
-                bomhandlermenu = new BomHandlerMenu();
-                Controls.Add(bomhandlermenu);
-                Resize += bomhandlermenu.Resizer;
+                levellister = new LevelTreePrinter();
+                Controls.Add(levellister);
+                Resize += levellister.Resizer;
             }
-            bomhandlermenu.Printthis(databaseInterface);
+            levellister.Printthis(databaseInterface, Size);
+        }
+
+        private void bOMÖsszehasonlításToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void rawToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (!Controls.Contains(rawlister))
+            {
+                rawlister = new RawPrinter();
+                Controls.Add(rawlister);
+                Resize += rawlister.Resizer;
+            }
+            rawlister.Printthis(databaseInterface, Size);
         }
     }
 }

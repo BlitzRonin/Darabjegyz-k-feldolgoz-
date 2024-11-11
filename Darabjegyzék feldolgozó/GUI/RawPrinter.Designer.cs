@@ -1,6 +1,6 @@
-﻿namespace Darabjegyzék_feldolgozó.GUI.CommonListing
+﻿namespace Darabjegyzék_feldolgozó.GUI
 {
-    partial class CommonPrinter
+    partial class RawPrinter
     {
         /// <summary> 
         /// Required designer variable.
@@ -45,18 +45,18 @@
             label1.Font = new Font("Sitka Text", 12F, FontStyle.Bold, GraphicsUnit.Point, 238);
             label1.Location = new Point(3, 10);
             label1.Name = "label1";
-            label1.Size = new Size(209, 23);
+            label1.Size = new Size(164, 23);
             label1.TabIndex = 2;
-            label1.Text = "Alkatrészek előfordulása";
+            label1.Text = "Nyers gépek listája";
             // 
-            // CommonPrinter
+            // RawPrinter
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(label1);
             Controls.Add(treeView1);
             Location = new Point(12, 27);
-            Name = "CommonPrinter";
+            Name = "RawPrinter";
             Size = new Size(692, 495);
             ResumeLayout(false);
             PerformLayout();

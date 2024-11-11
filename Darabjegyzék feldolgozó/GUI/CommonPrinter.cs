@@ -9,6 +9,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -24,9 +25,10 @@ namespace Darabjegyzék_feldolgozó.GUI.CommonListing
             InitializeComponent();
         }
 
-        public void Printthis(DatabaseInterface @interface)
+        public void Printthis(DatabaseInterface @interface, Size formsize)
         {
             this.@interface = @interface;
+            setsize(formsize);
             filltree();
             BringToFront();
         }
@@ -56,8 +58,8 @@ namespace Darabjegyzék_feldolgozó.GUI.CommonListing
 
         private void printpart(TreeNode part, CountCommon thiscommon)
         {
-            string line = "ID: "+thiscommon.Id+" ";
-            for (int i = 0;i<thiscommon.Levels.Count ; i++)
+            string line = "ID: " + thiscommon.Id + " ";
+            for (int i = 0; i < thiscommon.Levels.Count; i++)
             {
                 line += "Level " + thiscommon.Levels.ElementAt(i).Key + ": " + thiscommon.Levels.ElementAt(i).Value + "; ";
             }
@@ -76,9 +78,14 @@ namespace Darabjegyzék_feldolgozó.GUI.CommonListing
 
         public void Resizer(object sender, EventArgs e)
         {
-            Size formsize = ((Form1)sender).Size;
+            setsize(((Form1)sender).Size);
+        }
+
+        private void setsize(Size formsize)
+        {
             Size = new Size(formsize.Width - Location.X - 10, formsize.Height - Location.Y - 10);
             treeView1.Size = new Size(Width - treeView1.Location.X - 20, Height - treeView1.Location.Y - 40);
         }
     }
 }
+

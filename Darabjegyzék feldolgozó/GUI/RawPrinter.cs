@@ -1,0 +1,74 @@
+﻿using Darabjegyzék_feldolgozó.Database;
+using Darabjegyzék_feldolgozó.Database.Types.Machines;
+using Darabjegyzék_feldolgozó.GUI.BomList;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+
+namespace Darabjegyzék_feldolgozó.GUI
+{
+    public partial class RawPrinter : UserControl
+    {
+        DatabaseInterface @interface;
+
+        public RawPrinter()
+        {
+            InitializeComponent();
+        }
+
+        public void Printthis(DatabaseInterface @interface, Size formsize)
+        {
+            this.@interface = @interface;
+            setsize(formsize);
+            filltree();
+            BringToFront();
+        }
+
+
+        private void filltree()
+        {
+            treeView1.Nodes.Clear();
+            treeView1.BeginUpdate();
+            for (int i=0;i< @interface.Machines.Count ; i++)
+            {
+                treeView1.Nodes.Add(@interface.Machines[i].Id);
+                for(int j = 0;j<@interface.Machines[i].Raws.Count ; j++)
+                {
+                    Raw thisraw = @interface.Machines[i].Raws[j];
+                    string name = "Level: " + thisraw.Level + "; Mat-No/Doc: " + thisraw.Id + "; Docu-No/He: " + thisraw.Serial;
+                    string subs = "Item: " + thisraw.Item + "; Quantity: " + thisraw.Quantity + "; UM: " + thisraw.UM + "; Kind: " + thisraw.Kind + "; PTYP: " + thisraw.PTYP + "; Valid From: ";
+                    if (thisraw.Validfrom != null)
+                    {
+                        subs += thisraw.Validfrom.Value.Date.Year + "." + thisraw.Validfrom.Value.Date.Month + "." + thisraw.Validfrom.Value.Date.Day;
+                    }
+                    subs += "; Valid To: ";
+                    if (thisraw.Validto != null)
+                    {
+                        subs += thisraw.Validto.Value.Date.Year + "." + thisraw.Validto.Value.Date.Month + "." + thisraw.Validto.Value.Date.Day;
+                    }
+                    treeView1.Nodes[i].Nodes.Add(name);
+                    treeView1.Nodes[i].Nodes[treeView1.Nodes[i].Nodes.Count-1].Nodes.Add(subs);
+                }
+            }
+            treeView1.EndUpdate();
+        }
+
+        public void Resizer(object sender, EventArgs e)
+        {
+            setsize(((Form1)sender).Size);
+        }
+
+        private void setsize(Size formsize)
+        {
+            Size = new Size(formsize.Width - Location.X - 10, formsize.Height - Location.Y - 10);
+            treeView1.Size = new Size(Width - treeView1.Location.X - 20, Height - treeView1.Location.Y - 40);
+        }
+    }
+}

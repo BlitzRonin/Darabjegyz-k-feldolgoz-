@@ -92,7 +92,7 @@
             Controls.Add(label2);
             Controls.Add(label1);
             Controls.Add(flowLayoutPanel1);
-            Location = new Point(96, 47);
+            Location = new Point(12, 27);
             Name = "BomHandlerMenu";
             Size = new Size(692, 495);
             ResumeLayout(false);
