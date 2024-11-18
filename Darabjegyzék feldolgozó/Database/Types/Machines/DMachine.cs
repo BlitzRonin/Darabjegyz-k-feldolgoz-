@@ -12,7 +12,6 @@ namespace Darabjegyzék_feldolgozó.Database.Types.Machines
     // The Type of all BOM Files
     public class DMachine
     {
-        public bool Active { get; set; }
         public string Id { get; }
         public List<Part> Parts;
         public List<Raw> Raws { get {return raws; } }
@@ -22,7 +21,6 @@ namespace Darabjegyzék_feldolgozó.Database.Types.Machines
         public DMachine(string id)
         {
             Id = id;
-            Active = true;
         }
 
         public void AddRaw(int level, int item, double quantity, string um, string id, int kind, int ptyp, DateTime? validfrom, DateTime? validto, string serial)

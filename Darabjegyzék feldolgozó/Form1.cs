@@ -93,41 +93,53 @@ namespace Darabjegyzék_feldolgozó
                 Controls.Add(bomhandlermenu);
                 Resize += bomhandlermenu.Resizer;
             }
-            bomhandlermenu.Printthis(databaseInterface, Size);
+            else
+            {
+                bomhandlermenu.Printthis(databaseInterface, Size);
+            }
         }
 
         private void treeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (!Controls.Contains(bomlister))
             {
-                bomlister = new BomTreePrinter();
+                bomlister = new BomTreePrinter(databaseInterface, Size);
                 Controls.Add(bomlister);
                 Resize += bomlister.Resizer;
 
             }
-            bomlister.Printthis(databaseInterface, Size);
+            else
+            {
+                bomlister.Printthis(databaseInterface, Size);
+            }
         }
 
         private void bOMGyakoriságToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (!Controls.Contains(commonlister))
             {
-                commonlister = new CommonPrinter();
+                commonlister = new CommonPrinter(databaseInterface, Size);
                 Controls.Add(commonlister);
                 Resize += commonlister.Resizer;
             }
-            commonlister.Printthis(databaseInterface, Size);
+            else
+            {
+                commonlister.Printthis(databaseInterface, Size);
+            }
         }
 
         private void szintKimutatásToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (!Controls.Contains(levellister))
             {
-                levellister = new LevelTreePrinter();
+                levellister = new LevelTreePrinter(databaseInterface, Size);
                 Controls.Add(levellister);
                 Resize += levellister.Resizer;
             }
-            levellister.Printthis(databaseInterface, Size);
+            else
+            {
+                levellister.Printthis(databaseInterface, Size);
+            }
         }
 
         private void bOMÖsszehasonlításToolStripMenuItem_Click(object sender, EventArgs e)
@@ -139,11 +151,14 @@ namespace Darabjegyzék_feldolgozó
         {
             if (!Controls.Contains(rawlister))
             {
-                rawlister = new RawPrinter();
+                rawlister = new RawPrinter(databaseInterface,Size);
                 Controls.Add(rawlister);
                 Resize += rawlister.Resizer;
             }
-            rawlister.Printthis(databaseInterface, Size);
+            else
+            {
+                rawlister.Printthis(databaseInterface, Size);
+            }
         }
     }
 }

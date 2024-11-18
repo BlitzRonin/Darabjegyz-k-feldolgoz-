@@ -27,7 +27,7 @@ namespace Darabjegyzék_feldolgozó.GUI.LevelList
             tree.BeginUpdate();
             for (int i = 0; i < @interface.Machines.Count; i++)
             {
-                if (@interface.Machines[i].Active)
+                if (@interface.Filtering.filterActive(@interface.Machines[i].Id))
                 {
                     tree.Nodes.Add(@interface.Machines[i].Id);
                     using (CountLinear linear = new CountLinear(@interface.Machines[i].Raws))
@@ -49,7 +49,7 @@ namespace Darabjegyzék_feldolgozó.GUI.LevelList
             tree.BeginUpdate();
             for (int i = 0; i < @interface.Machines.Count; i++)
             {
-                if (@interface.Machines[i].Active)
+                if (@interface.Filtering.filterActive(@interface.Machines[i].Id))
                 {
                     using (CountTree counter = new CountTree(@interface.Machines[i].Parts))
                     {
@@ -69,6 +69,7 @@ namespace Darabjegyzék_feldolgozó.GUI.LevelList
             for (int i = 0; i < currdata.Count; i++)
             {
                 printpart(currtree, currdata[i]);
+                //MessageBox.Show(currdata.Count.ToString());
                 if (currdata[i].node != null)
                 {
                     makeTree(currtree.Nodes[i], ref currdata[i].node);

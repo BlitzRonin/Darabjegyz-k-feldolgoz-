@@ -1,6 +1,5 @@
 ﻿using Darabjegyzék_feldolgozó.Database;
-using Darabjegyzék_feldolgozó.Database.Types.Filters;
-using Darabjegyzék_feldolgozó.GUI.BomList;
+using Darabjegyzék_feldolgozó.GUI.LevelList;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -10,18 +9,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
-namespace Darabjegyzék_feldolgozó.GUI
+namespace Darabjegyzék_feldolgozó.GUI.Compare
 {
-    public partial class BomTreePrinter : UserControl
+    public partial class ComparePrinter : UserControl
     {
         DatabaseInterface @interface;
 
-        public BomTreePrinter(DatabaseInterface @interface, Size formsize)
+        public ComparePrinter(DatabaseInterface @interface, Size formsize)
         {
             InitializeComponent();
             filterMenu1.setfilter(@interface.Filtering);
-            pr(@interface,formsize);
+            pr(@interface, formsize);
         }
 
         private void pr(DatabaseInterface @interface, Size formsize)
@@ -32,16 +32,18 @@ namespace Darabjegyzék_feldolgozó.GUI
             BringToFront();
         }
 
-        public void Printthis(DatabaseInterface @interface,Size formsize)
+        public void Printthis(DatabaseInterface @interface, Size formsize)
         {
             pr(@interface, formsize);
         }
 
+
         private void filltree()
         {
-            using (BomTree treeBuilder = new BomTree(@interface))
+            using (LevelTree treeBuilder = new LevelTree(@interface))
             {
-                treeBuilder.buildTree(treeView1);
+                treeBuilder.buildList(treeView1);
+                treeBuilder.buildTree(treeView2);
             }
         }
 
@@ -53,7 +55,9 @@ namespace Darabjegyzék_feldolgozó.GUI
         private void setsize(Size formsize)
         {
             Size = new Size(formsize.Width - Location.X - 10, formsize.Height - Location.Y - 10);
-            treeView1.Size = new Size(Width - treeView1.Location.X - 20, Height - treeView1.Location.Y - 40);
+            //treeView1.Size = new Size(((Size.Width - treeView1.Location.X - 10) * 25) / 100, Size.Height - treeView1.Location.Y - 40);
+            //treeView2.Location = new Point(treeView1.Location.X + treeView1.Width + 10, treeView2.Location.Y);
+            //treeView2.Size = new Size(Size.Width - 20 - treeView2.Location.X, Size.Height - treeView2.Location.Y - 40);
         }
     }
 }

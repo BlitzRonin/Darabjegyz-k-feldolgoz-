@@ -37,7 +37,7 @@ namespace Darabjegyzék_feldolgozó.GUI
             {
                 if (!exist(@interface.Machines[i].Id))
                 {
-                    controlList.Add(new BomControl(@interface.Machines[i]));
+                    controlList.Add(new BomControl(@interface.Machines[i],@interface.Filtering));
                 }
             }
             for (int i = 0; i < controlList.Count; i++)

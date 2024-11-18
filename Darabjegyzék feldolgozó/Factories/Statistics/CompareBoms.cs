@@ -1,6 +1,7 @@
 ﻿using Darabjegyzék_feldolgozó.Database.Types.Machines;
 using Darabjegyzék_feldolgozó.Database.Types.Statistics.Compare;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,60 +11,112 @@ namespace Darabjegyzék_feldolgozó.Factories.Statistics
 {
     public class CompareBoms
     {
-        //Ha a mode igaz akkor különbséget keres
-        private bool mode;
-        private List<CompareMachines> result;
-        public List<CompareMachines> Compare(List<DMachine> comparable, bool difference)
+        //Ha a mode igaz akkor különbséget keres;
+        public List<CompareElements> ResultA { get { return resultA; } }
+        public List<CompareElements> ResultB { get { return resultB; } }
+
+        private List<CompareElements> resultA;
+        private List<CompareElements> resultB;
+
+        public void Compare(DMachine A,DMachine B)
         {
-            mode = difference;
-            result = new List<CompareMachines>();
-            List<List<Part>> baseparts = new List<List<Part>>();
-            for(int i=0;i<comparable.Count;i++)
-            {
-                result.Add(new CompareMachines(comparable[i].Id));
-                baseparts.Add(comparable[i].Parts);
-            }
-            processparts(ref baseparts);
-            return result;
+            processparts(ref A.Parts, ref B.Parts, ref resultA,ref resultB);
         }
 
-        private int countmax(List<List<Part>> currpart)
+        private void processparts(ref List<Part> listA, ref List<Part> listB,ref List<CompareElements> currentresA, ref List<CompareElements> currentresB)
         {
-            int max = currpart[0].Count;
-            for(int i =1;i<currpart.Count ; i++)
+            if (currentresA == null)
             {
-                if (currpart[i].Count > max)
+                currentresA = new List<CompareElements>();
+            }
+            if (currentresB == null)
+            {
+                currentresB = new List<CompareElements>();
+            }
+            int first = listA.Count;
+            int secound = 0;
+            if (listA.Count > listB.Count)
+            {
+                first = listB.Count;
+                secound = listA.Count;
+            }
+            else if(listB.Count > listA.Count)
+            {
+                first = listA.Count;
+                secound= listB.Count;
+            }
+            for (int i = 0; i < first; i++)
+            {
+                currentresA.Add(new CompareElements(CompareTwo(listA[i], listB[i])));
+                currentresB.Add(new CompareElements(currentresA[i].Mode));
+                if (listA[i].Parts != null && listB[i].Parts != null)
                 {
-                    max = currpart[i].Count;
+                    processparts(ref listA[i].Parts, ref listB[i].Parts, ref currentresA[i].relation, ref currentresB[i].relation);
+                }
+                else if(listA[i].Parts != null && listB[i].Parts == null)
+                {
+                    moveone(ref listA[i].Parts, ref currentresA[i].relation);
+                }
+                else if(listA[i].Parts == null && listB[i].Parts != null)
+                {
+                    moveone(ref listB[i].Parts, ref currentresB[i].relation);
                 }
             }
-            return max;
+            if(secound > 0)
+            {
+                if(listB.Count>listA.Count)
+                {
+                    for (int i = first; i < secound; i++)
+                    {
+                        if (listB[i].Parts != null)
+                        {
+                            moveone(ref listB[i].Parts, ref currentresB[i].relation);
+                        }
+                    }
+                }
+                else
+                {
+                    for (int i = first; i < secound; i++)
+                    {
+                        if (listA[i].Parts != null)
+                        {
+                            moveone(ref listA[i].Parts, ref currentresA[i].relation);
+                        }
+                    }
+                }
+            }
         }
 
-        private void processparts(ref List<List<Part>> currparts)
+        private void moveone(ref List<Part> list, ref List<CompareElements> currentres)
         {
-            int count = countmax(currparts);
-            bool alldoes = false;
-            for (int i = 0; i < count; i++)
+            if(currentres == null)
             {
-
+                currentres = new List<CompareElements>();
             }
-            if (alldoes == mode)
+            for(int i = 0;i<list.Count;i++)
             {
-            
+                currentres.Add(new CompareElements("different"));
+                if (list[i].Parts != null)
+                {
+                    moveone(ref list[i].Parts, ref currentres[i].relation);
+                }
             }
         }
 
-        private bool CompareTwo(Part A,Part B)
+        private string CompareTwo(Part A,Part B)
         {
-            if (A.Item != B.Item && A.Level != B.Level && A.PTYP != B.PTYP && A.Kind != B.Kind && A.UM != B.UM && A.Quantity != B.Quantity && A.Id != B.Id && A.Parts != B.Parts)
+            if (A.Id == B.Id)
             {
-                return true;
+                if(A.Quantity != B.Quantity)
+                {
+                    return "changed";
+                }
+                return "same";
             }
             else
             {
-                return false;
+                return "different";
             }
-        }
+        } 
     }
 }

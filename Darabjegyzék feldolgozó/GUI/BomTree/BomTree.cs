@@ -23,7 +23,7 @@ namespace Darabjegyzék_feldolgozó.GUI.BomList
             tree.BeginUpdate();
             for (int i = 0; i < @interface.Machines.Count; i++)
             {
-                if (@interface.Machines[i].Active)
+                if (@interface.Filtering.filterActive(@interface.Machines[i].Id))
                 {
                     tree.Nodes.Add(@interface.Machines[i].Id);
                     makeTree(tree.Nodes[i], ref @interface.Machines[i].Parts);

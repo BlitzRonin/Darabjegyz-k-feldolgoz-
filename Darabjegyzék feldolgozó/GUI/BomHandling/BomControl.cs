@@ -1,4 +1,5 @@
-﻿using Darabjegyzék_feldolgozó.Database.Types.Machines;
+﻿using Darabjegyzék_feldolgozó.Database.Types.Filters;
+using Darabjegyzék_feldolgozó.Database.Types.Machines;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,14 +14,16 @@ namespace Darabjegyzék_feldolgozó.GUI.BomHandling
 {
     public partial class BomControl : UserControl
     {
+        private Filter filter;
         private DMachine machine;
-        public BomControl(DMachine machine)
+        public BomControl(DMachine machine,Filter filter)
         {
             InitializeComponent();
             this.machine = machine;
+            this.filter = filter;
             label1.Text = machine.Id;
             label2.Text = machine.Raws.Count.ToString();
-            if(machine.Active)
+            if(filter.filterActive(machine.Id))
             {
                 printactive();
             }
@@ -32,22 +35,15 @@ namespace Darabjegyzék_feldolgozó.GUI.BomHandling
 
         private void button1_Click(object sender, EventArgs e)
         {
-            setactivebutton();
-        }
-
-        private void setactivebutton()
-        {
-            if(machine.Active)
+            if (filter.filterActive(machine.Id))
             {
                 printinact();
-                machine.Active = false;
-
             }
-            else 
+            else
             {
                 printactive();
-                machine.Active = true;
             }
+            filter.setActive(machine.Id);
         }
 
         private void printactive()

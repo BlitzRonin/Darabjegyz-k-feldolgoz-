@@ -9,12 +9,12 @@ namespace Darabjegyzék_feldolgozó.Database.Types.Statistics.Compare
 {
     public class CompareElements
     {
-        public string Path { get; }
-        public Part part { get; }
-        public CompareElements(string path, Part part)
+        public string Mode { get; }
+        public List<CompareElements> relation;
+
+        public CompareElements(string mode)
         {
-            Path = path;
-            this.part = part;
+            Mode = mode;
         }
     }
 }

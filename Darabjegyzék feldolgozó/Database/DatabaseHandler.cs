@@ -7,6 +7,7 @@ using System.Reflection.PortableExecutable;
 using System.Text;
 using System.Threading.Tasks;
 using Darabjegyzék_feldolgozó.Database.File;
+using Darabjegyzék_feldolgozó.Database.Types.Filters;
 using Darabjegyzék_feldolgozó.Database.Types.Machines;
 using Darabjegyzék_feldolgozó.Factories.Preppers;
 
@@ -16,17 +17,21 @@ namespace Darabjegyzék_feldolgozó.Database
 
     public class DatabaseHandler : DatabaseInterface
     {
+        public Filter Filtering { get; }
         public List<DMachine> Machines { get { return machines; } }
+        
         private List<DMachine> machines;
 
         public DatabaseHandler()
         {
+            Filtering = new Filter();
             machines = new List<DMachine>();
         }
 
         public void removeThis(int index)
         {
             machines.RemoveAt(index);
+            Filtering.removeActive(machines[index].Id);
         }
 
         public void removeThis(string id)
@@ -38,6 +43,7 @@ namespace Darabjegyzék_feldolgozó.Database
                     machines.RemoveAt(i);
                 }
             }
+            Filtering.removeActive(id);
         }
 
         //Adds a new BOM into the program
@@ -48,6 +54,7 @@ namespace Darabjegyzék_feldolgozó.Database
             {
                 machines.Add(prepit.prepper(path, machines));
             }
+            Filtering.addActive(machines[machines.Count - 1].Id);
             addTree(machines.Count-1);
         }
 

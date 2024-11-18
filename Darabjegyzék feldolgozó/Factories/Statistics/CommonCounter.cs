@@ -31,26 +31,26 @@ namespace Darabjegyzék_feldolgozó.Factories.Statistics
                         {
                             if (@interface[j].Level != 0)
                             {
-                                commons[index].countit(@interface[j].Level);
+                                commons[index].countit(@interface[i].Quantity,@interface[j].Level);
                                 break;
                             }
                         }
                     }
                     else
                     {
-                        commons[index].countit(@interface[i].Level);
+                        commons[index].countit(@interface[i].Quantity,@interface[i].Level);
                     }
                 }
                 else
                 {
-                    commons.Add(new CountCommon(@interface[i].Id, @interface[i].Level));
+                    commons.Add(new CountCommon(@interface[i].Id, @interface[i].Level, @interface[i].Quantity));
                     if (@interface[i].Level == 0)
                     {
                         for(int j = i;j>0;j--)
                         {
                             if (@interface[j].Level != 0)
                             {
-                                commons[commons.Count - 1].countit(@interface[j].Level);
+                                commons[commons.Count - 1].countit(@interface[i].Quantity,@interface[j].Level);
                             }
                         }
                     }

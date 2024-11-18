@@ -33,23 +33,34 @@ namespace Darabjegyzék_feldolgozó.Factories.Statistics.Counter.Tree
             {
                 if (currpart[i].Level == 0)
                 {
-                    currcount[currcount.Count-1].countzero();
+                    currcount[currcount.Count - 1].countzero();
                 }
                 else
                 {
-                    currcount[currcount.Count-1].countlevel();
+                    currcount[currcount.Count - 1].countlevel();
                 }
                 if (currpart[i].Parts != null)
                 {
-                    if(currcount[currcount.Count-1].node == null)
+                    if(currcount[currcount.Count - 1].node == null)
                     {
                         currcount[currcount.Count-1].node = [new CountNode(currpart[i].Id, currpart[i].Parts[0].Level)];
                     }
                     else
                     {
-                        currcount[currcount.Count-1].node.Add(new CountNode(currpart[i].Id, currpart[i].Parts[0].Level));
+                        currcount[currcount.Count - 1].node.Add(new CountNode(currpart[i].Id, currpart[i].Parts[0].Level));
                     }
-                    makeCount(ref currpart[i].Parts,ref currcount[currcount.Count-1].node);
+                    makeCount(ref currpart[i].Parts,ref currcount[currcount.Count - 1].node);
+                }
+                else
+                {
+                    if (currcount[currcount.Count - 1].node == null)
+                    {
+                        currcount[currcount.Count - 1].node = [new CountNode(currpart[i].Id, currpart[i].Level)];
+                    }
+                    else
+                    {
+                        currcount[currcount.Count - 1].node.Add(new CountNode(currpart[i].Id, currpart[i].Level));
+                    }
                 }
             }
         }

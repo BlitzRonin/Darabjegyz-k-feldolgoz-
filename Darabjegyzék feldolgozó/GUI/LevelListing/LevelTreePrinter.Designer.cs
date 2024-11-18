@@ -31,13 +31,14 @@
             label1 = new Label();
             treeView1 = new TreeView();
             treeView2 = new TreeView();
+            filterMenu1 = new Other.FilterMenu();
             SuspendLayout();
             // 
             // label1
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Sitka Text", 12F, FontStyle.Bold, GraphicsUnit.Point, 238);
-            label1.Location = new Point(3, 10);
+            label1.Location = new Point(3, 87);
             label1.Name = "label1";
             label1.Size = new Size(126, 23);
             label1.TabIndex = 2;
@@ -45,28 +46,36 @@
             // 
             // treeView1
             // 
-            treeView1.Location = new Point(3, 36);
+            treeView1.Location = new Point(3, 113);
             treeView1.Name = "treeView1";
-            treeView1.Size = new Size(222, 456);
+            treeView1.Size = new Size(263, 461);
             treeView1.TabIndex = 3;
             // 
             // treeView2
             // 
-            treeView2.Location = new Point(231, 36);
+            treeView2.Location = new Point(272, 113);
             treeView2.Name = "treeView2";
-            treeView2.Size = new Size(458, 456);
+            treeView2.Size = new Size(527, 461);
             treeView2.TabIndex = 4;
+            // 
+            // filterMenu1
+            // 
+            filterMenu1.Location = new Point(3, 3);
+            filterMenu1.Name = "filterMenu1";
+            filterMenu1.Size = new Size(797, 83);
+            filterMenu1.TabIndex = 5;
             // 
             // LevelTreePrinter
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(filterMenu1);
             Controls.Add(treeView2);
             Controls.Add(treeView1);
             Controls.Add(label1);
             Location = new Point(12, 27);
             Name = "LevelTreePrinter";
-            Size = new Size(692, 495);
+            Size = new Size(802, 577);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -75,5 +84,6 @@
         private Label label1;
         private TreeView treeView1;
         private TreeView treeView2;
+        private Other.FilterMenu filterMenu1;
     }
 }

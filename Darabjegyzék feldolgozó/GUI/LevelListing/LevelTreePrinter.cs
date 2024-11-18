@@ -15,17 +15,25 @@ namespace Darabjegyzék_feldolgozó.GUI
     public partial class LevelTreePrinter : UserControl
     {
         DatabaseInterface @interface;
-        public LevelTreePrinter()
+
+        public LevelTreePrinter(DatabaseInterface @interface, Size formsize)
         {
             InitializeComponent();
+            filterMenu1.setfilter(@interface.Filtering);
+            pr(@interface, formsize);
         }
 
-        public void Printthis(DatabaseInterface @interface,Size formsize)
+        private void pr(DatabaseInterface @interface, Size formsize)
         {
             this.@interface = @interface;
             setsize(formsize);
             filltree();
             BringToFront();
+        }
+
+        public void Printthis(DatabaseInterface @interface, Size formsize)
+        {
+            pr(@interface, formsize);
         }
 
 

@@ -11,17 +11,17 @@ namespace Darabjegyzék_feldolgozó.Database.Types.Statistics
     {
         public string Id { get; }
         public bool Zero { get; }
-        public Dictionary<int,int> Levels { get { return levels; } }
+        public Dictionary<int,double> Levels { get { return levels; } }
 
-        private Dictionary<int, int> levels;
+        private Dictionary<int, double> levels;
 
-        public CountCommon(string id,int level)
+        public CountCommon(string id,int level,double input)
         {
             Id = id;
-            levels = new Dictionary<int, int>();
+            levels = new Dictionary<int, double>();
             if(level != 0)
             {
-                countit(level);
+                countit(input,level);
                 Zero = false;
             }
             else
@@ -30,15 +30,15 @@ namespace Darabjegyzék_feldolgozó.Database.Types.Statistics
             }
         }
 
-        public void countit(int level)
+        public void countit(double input,int level)
         {
             if (!levels.ContainsKey(level))
             {
-                levels.Add(level,1);
+                levels.Add(level,input);
             }
             else
             {
-                levels[level]++;
+                levels[level] += input;
             }
         }
     }

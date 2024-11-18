@@ -16,14 +16,21 @@ namespace Darabjegyzék_feldolgozó.GUI
 {
     public partial class RawPrinter : UserControl
     {
-        DatabaseInterface @interface;
+        private DatabaseInterface @interface;
 
-        public RawPrinter()
+        public RawPrinter(DatabaseInterface @interface,Size formsize)
         {
             InitializeComponent();
+            pr(@interface, formsize);
+            filter1.setfilter(@interface.Filtering);
         }
 
         public void Printthis(DatabaseInterface @interface, Size formsize)
+        {
+            pr(@interface,formsize);
+        }
+
+        private void pr(DatabaseInterface @interface, Size formsize)
         {
             this.@interface = @interface;
             setsize(formsize);
@@ -31,30 +38,35 @@ namespace Darabjegyzék_feldolgozó.GUI
             BringToFront();
         }
 
-
         private void filltree()
         {
             treeView1.Nodes.Clear();
             treeView1.BeginUpdate();
             for (int i=0;i< @interface.Machines.Count ; i++)
             {
-                treeView1.Nodes.Add(@interface.Machines[i].Id);
-                for(int j = 0;j<@interface.Machines[i].Raws.Count ; j++)
+                if (@interface.Filtering.filterActive(@interface.Machines[i].Id))
                 {
-                    Raw thisraw = @interface.Machines[i].Raws[j];
-                    string name = "Level: " + thisraw.Level + "; Mat-No/Doc: " + thisraw.Id + "; Docu-No/He: " + thisraw.Serial;
-                    string subs = "Item: " + thisraw.Item + "; Quantity: " + thisraw.Quantity + "; UM: " + thisraw.UM + "; Kind: " + thisraw.Kind + "; PTYP: " + thisraw.PTYP + "; Valid From: ";
-                    if (thisraw.Validfrom != null)
+                    treeView1.Nodes.Add(@interface.Machines[i].Id);
+                    for (int j = 0; j < @interface.Machines[i].Raws.Count; j++)
                     {
-                        subs += thisraw.Validfrom.Value.Date.Year + "." + thisraw.Validfrom.Value.Date.Month + "." + thisraw.Validfrom.Value.Date.Day;
+                        Raw thisraw = @interface.Machines[i].Raws[j];
+                        if(@interface.Filtering.filterElement(thisraw))
+                        {
+                            string name = "Level: " + thisraw.Level + "; Mat-No/Doc: " + thisraw.Id + "; Docu-No/He: " + thisraw.Serial;
+                            string subs = "Item: " + thisraw.Item + "; Quantity: " + thisraw.Quantity + "; UM: " + thisraw.UM + "; Kind: " + thisraw.Kind + "; PTYP: " + thisraw.PTYP + "; Valid From: ";
+                            if (thisraw.Validfrom != null)
+                            {
+                                subs += thisraw.Validfrom.Value.Date.Year + "." + thisraw.Validfrom.Value.Date.Month + "." + thisraw.Validfrom.Value.Date.Day;
+                            }
+                            subs += "; Valid To: ";
+                            if (thisraw.Validto != null)
+                            {
+                                subs += thisraw.Validto.Value.Date.Year + "." + thisraw.Validto.Value.Date.Month + "." + thisraw.Validto.Value.Date.Day;
+                            }
+                            treeView1.Nodes[treeView1.Nodes.Count - 1].Nodes.Add(name);
+                            treeView1.Nodes[treeView1.Nodes.Count - 1].Nodes[treeView1.Nodes[treeView1.Nodes.Count - 1].Nodes.Count - 1].Nodes.Add(subs);
+                        }
                     }
-                    subs += "; Valid To: ";
-                    if (thisraw.Validto != null)
-                    {
-                        subs += thisraw.Validto.Value.Date.Year + "." + thisraw.Validto.Value.Date.Month + "." + thisraw.Validto.Value.Date.Day;
-                    }
-                    treeView1.Nodes[i].Nodes.Add(name);
-                    treeView1.Nodes[i].Nodes[treeView1.Nodes[i].Nodes.Count-1].Nodes.Add(subs);
                 }
             }
             treeView1.EndUpdate();

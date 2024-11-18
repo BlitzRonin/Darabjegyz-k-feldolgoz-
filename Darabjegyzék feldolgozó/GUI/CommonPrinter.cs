@@ -20,12 +20,15 @@ namespace Darabjegyzék_feldolgozó.GUI.CommonListing
     public partial class CommonPrinter : UserControl
     {
         DatabaseInterface @interface;
-        public CommonPrinter()
+
+        public CommonPrinter(DatabaseInterface @interface, Size formsize)
         {
             InitializeComponent();
+            filterMenu1.setfilter(@interface.Filtering);
+            pr(@interface, formsize);
         }
 
-        public void Printthis(DatabaseInterface @interface, Size formsize)
+        private void pr(DatabaseInterface @interface, Size formsize)
         {
             this.@interface = @interface;
             setsize(formsize);
@@ -33,6 +36,10 @@ namespace Darabjegyzék_feldolgozó.GUI.CommonListing
             BringToFront();
         }
 
+        public void Printthis(DatabaseInterface @interface, Size formsize)
+        {
+            pr(@interface, formsize);
+        }
 
         private void filltree()
         {
@@ -40,7 +47,7 @@ namespace Darabjegyzék_feldolgozó.GUI.CommonListing
             treeView1.BeginUpdate();
             for (int i = 0; i < @interface.Machines.Count; i++)
             {
-                if (@interface.Machines[i].Active)
+                if (@interface.Filtering.filterActive(@interface.Machines[i].Id))
                 {
                     treeView1.Nodes.Add(@interface.Machines[i].Id);
                     using (CommonCounter counter = new CommonCounter(@interface.Machines[i].Raws))
