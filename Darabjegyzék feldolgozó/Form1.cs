@@ -2,12 +2,14 @@ using Darabjegyzék_feldolgozó.Database;
 using Darabjegyzék_feldolgozó.Factories.Statistics.Counter.Linear;
 using Darabjegyzék_feldolgozó.GUI;
 using Darabjegyzék_feldolgozó.GUI.CommonListing;
+using Darabjegyzék_feldolgozó.GUI.Compare;
 using System.Windows.Forms;
 
 namespace Darabjegyzék_feldolgozó
 {
     public partial class Form1 : Form
     {
+        private CompareTreePrinter compareprinter;
         private BomTreePrinter bomlister;
         private LevelTreePrinter levellister;
         private CommonPrinter commonlister;
@@ -27,23 +29,23 @@ namespace Darabjegyzék_feldolgozó
         {
             if (zero == typeof(BomTreePrinter))
             {
-                bomlister.Printthis(databaseInterface, Size);
+                bomlister.Printthis(databaseInterface);
             }
             else if (zero == typeof(LevelTreePrinter))
             {
-                levellister.Printthis(databaseInterface, Size);
+                levellister.Printthis(databaseInterface);
             }
             else if (zero == typeof(CommonPrinter))
             {
-                commonlister.Printthis(databaseInterface, Size);
+                commonlister.Printthis(databaseInterface);
             }
             else if (zero == typeof(BomHandlerMenu))
             {
-                bomhandlermenu.Printthis(databaseInterface, Size);
+                bomhandlermenu.Printthis(databaseInterface);
             }
             else if (zero == typeof(RawPrinter))
             {
-                rawlister.Printthis(databaseInterface, Size);
+                rawlister.Printthis(databaseInterface);
             }
         }
 
@@ -91,74 +93,59 @@ namespace Darabjegyzék_feldolgozó
             {
                 bomhandlermenu = new BomHandlerMenu();
                 Controls.Add(bomhandlermenu);
-                Resize += bomhandlermenu.Resizer;
             }
-            else
-            {
-                bomhandlermenu.Printthis(databaseInterface, Size);
-            }
+            bomhandlermenu.Printthis(databaseInterface);
         }
 
         private void treeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (!Controls.Contains(bomlister))
             {
-                bomlister = new BomTreePrinter(databaseInterface, Size);
+                bomlister = new BomTreePrinter(databaseInterface);
                 Controls.Add(bomlister);
-                Resize += bomlister.Resizer;
 
             }
-            else
-            {
-                bomlister.Printthis(databaseInterface, Size);
-            }
+            bomlister.Printthis(databaseInterface);
         }
 
         private void bOMGyakoriságToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (!Controls.Contains(commonlister))
             {
-                commonlister = new CommonPrinter(databaseInterface, Size);
+                commonlister = new CommonPrinter(databaseInterface);
                 Controls.Add(commonlister);
-                Resize += commonlister.Resizer;
             }
-            else
-            {
-                commonlister.Printthis(databaseInterface, Size);
-            }
+            commonlister.Printthis(databaseInterface);
         }
 
         private void szintKimutatásToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (!Controls.Contains(levellister))
             {
-                levellister = new LevelTreePrinter(databaseInterface, Size);
+                levellister = new LevelTreePrinter(databaseInterface);
                 Controls.Add(levellister);
-                Resize += levellister.Resizer;
             }
-            else
-            {
-                levellister.Printthis(databaseInterface, Size);
-            }
+            levellister.Printthis(databaseInterface);
         }
 
         private void bOMÖsszehasonlításToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            if (!Controls.Contains(compareprinter))
+            {
+                compareprinter = new CompareTreePrinter(databaseInterface);
+                Controls.Add(compareprinter);
+            }
+            compareprinter.Printthis(databaseInterface);
         }
 
         private void rawToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (!Controls.Contains(rawlister))
             {
-                rawlister = new RawPrinter(databaseInterface,Size);
+                rawlister = new RawPrinter(databaseInterface);
                 Controls.Add(rawlister);
-                Resize += rawlister.Resizer;
             }
-            else
-            {
-                rawlister.Printthis(databaseInterface, Size);
-            }
+            rawlister.Printthis(databaseInterface);
         }
     }
 }

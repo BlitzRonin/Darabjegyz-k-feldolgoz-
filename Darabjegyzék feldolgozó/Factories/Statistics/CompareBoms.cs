@@ -1,11 +1,14 @@
-﻿using Darabjegyzék_feldolgozó.Database.Types.Machines;
-using Darabjegyzék_feldolgozó.Database.Types.Statistics.Compare;
+﻿using Darabjegyzék_feldolgozó.Database.Types.Filters;
+using Darabjegyzék_feldolgozó.Database.Types.Machines;
+using Darabjegyzék_feldolgozó.Database.Types.Statistics;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.DirectoryServices.ActiveDirectory;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Darabjegyzék_feldolgozó.Factories.Statistics
 {
@@ -17,6 +20,12 @@ namespace Darabjegyzék_feldolgozó.Factories.Statistics
 
         private List<CompareElements> resultA;
         private List<CompareElements> resultB;
+        private Filter filter;
+
+        public CompareBoms(Filter filter)
+        { 
+            this.filter = filter;
+        }
 
         public void Compare(DMachine A,DMachine B)
         {
@@ -33,7 +42,7 @@ namespace Darabjegyzék_feldolgozó.Factories.Statistics
             {
                 currentresB = new List<CompareElements>();
             }
-            int first = listA.Count;
+            int first = 0;
             int secound = 0;
             if (listA.Count > listB.Count)
             {
@@ -45,6 +54,26 @@ namespace Darabjegyzék_feldolgozó.Factories.Statistics
                 first = listA.Count;
                 secound= listB.Count;
             }
+            else
+            {
+                first = listA.Count;
+            }
+            firstmove(ref listA, ref listB, ref currentresA, ref currentresB, first);
+            if (secound > 0)
+            {
+                if (listB.Count > listA.Count)
+                {
+                    secoundmove(ref listB,ref currentresB,first,secound);
+                }
+                else
+                {
+                    secoundmove(ref listA,ref currentresA,first,secound);
+                }
+            }          
+        }
+
+        private void firstmove(ref List<Part> listA, ref List<Part> listB, ref List<CompareElements> currentresA, ref List<CompareElements> currentresB,int first)
+        {
             for (int i = 0; i < first; i++)
             {
                 currentresA.Add(new CompareElements(CompareTwo(listA[i], listB[i])));
@@ -53,38 +82,27 @@ namespace Darabjegyzék_feldolgozó.Factories.Statistics
                 {
                     processparts(ref listA[i].Parts, ref listB[i].Parts, ref currentresA[i].relation, ref currentresB[i].relation);
                 }
-                else if(listA[i].Parts != null && listB[i].Parts == null)
+                else if (listA[i].Parts != null && listB[i].Parts == null)
                 {
                     moveone(ref listA[i].Parts, ref currentresA[i].relation);
                 }
-                else if(listA[i].Parts == null && listB[i].Parts != null)
+                else if (listA[i].Parts == null && listB[i].Parts != null)
                 {
                     moveone(ref listB[i].Parts, ref currentresB[i].relation);
                 }
             }
-            if(secound > 0)
+        }
+
+        private void secoundmove(ref List<Part> list, ref List<CompareElements> currentres,int first,int secound)
+        {
+            for (int i = first; i < secound; i++)
             {
-                if(listB.Count>listA.Count)
+                currentres.Add(new CompareElements("different"));
+                if (list[i].Parts != null)
                 {
-                    for (int i = first; i < secound; i++)
-                    {
-                        if (listB[i].Parts != null)
-                        {
-                            moveone(ref listB[i].Parts, ref currentresB[i].relation);
-                        }
-                    }
+                    moveone(ref list[i].Parts, ref currentres[i].relation);
                 }
-                else
-                {
-                    for (int i = first; i < secound; i++)
-                    {
-                        if (listA[i].Parts != null)
-                        {
-                            moveone(ref listA[i].Parts, ref currentresA[i].relation);
-                        }
-                    }
-                }
-            }
+             }
         }
 
         private void moveone(ref List<Part> list, ref List<CompareElements> currentres)
@@ -95,10 +113,13 @@ namespace Darabjegyzék_feldolgozó.Factories.Statistics
             }
             for(int i = 0;i<list.Count;i++)
             {
-                currentres.Add(new CompareElements("different"));
-                if (list[i].Parts != null)
+                if (filter.filterElement(list[i]))
                 {
-                    moveone(ref list[i].Parts, ref currentres[i].relation);
+                    currentres.Add(new CompareElements("different"));
+                    if (list[i].Parts != null)
+                    {
+                        moveone(ref list[i].Parts, ref currentres[i].relation);
+                    }
                 }
             }
         }

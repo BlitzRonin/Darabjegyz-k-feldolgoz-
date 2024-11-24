@@ -1,4 +1,5 @@
-﻿using Darabjegyzék_feldolgozó.Database.Types.Machines;
+﻿using Darabjegyzék_feldolgozó.Database.Types.Filters;
+using Darabjegyzék_feldolgozó.Database.Types.Machines;
 using Darabjegyzék_feldolgozó.Database.Types.Statistics;
 using System;
 using System.Collections.Generic;
@@ -18,30 +19,33 @@ namespace Darabjegyzék_feldolgozó.Factories.Statistics.Counter.Linear
             @interface = raws;
         }
 
-        public List<Countlevels> dothecount()
+        public List<Countlevels> dothecount(Filter filter)
         {
             List<Countlevels> levels = new List<Countlevels>();
             for (int i = 0; i < @interface.Count; i++)
             {
-                if (@interface[i].Level > levels.Count)
+                if (filter.filterElement(@interface[i]))
                 {
-                    levels.Add(new Countlevels(@interface[i].Level));
-                }
-                if (@interface[i].Level == 0)
-                {
-                    for (int j = i; j > 0; j++)
+                    if (@interface[i].Level > levels.Count)
                     {
-                        if (@interface[j].Level != 0)
+                        levels.Add(new Countlevels(@interface[i].Level));
+                    }
+                    if (@interface[i].Level == 0)
+                    {
+                        for (int j = i; j > 0; j++)
                         {
-                            levels[@interface[j].Level - 1].countzero();
-                            break;
+                            if (@interface[j].Level != 0)
+                            {
+                                levels[@interface[j].Level - 1].countzero();
+                                break;
+                            }
                         }
                     }
-                }
-                else
-                {
-                    levels[@interface[i].Level - 1].countlevel();
-                }
+                    else
+                    {
+                        levels[@interface[i].Level - 1].countlevel();
+                    }
+                }    
             }
             return levels;
         }

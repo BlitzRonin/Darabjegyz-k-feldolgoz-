@@ -21,24 +21,17 @@ namespace Darabjegyzék_feldolgozó.GUI.CommonListing
     {
         DatabaseInterface @interface;
 
-        public CommonPrinter(DatabaseInterface @interface, Size formsize)
+        public CommonPrinter(DatabaseInterface @interface)
         {
             InitializeComponent();
             filterMenu1.setfilter(@interface.Filtering);
-            pr(@interface, formsize);
         }
 
-        private void pr(DatabaseInterface @interface, Size formsize)
+        public void Printthis(DatabaseInterface @interface)
         {
             this.@interface = @interface;
-            setsize(formsize);
             filltree();
             BringToFront();
-        }
-
-        public void Printthis(DatabaseInterface @interface, Size formsize)
-        {
-            pr(@interface, formsize);
         }
 
         private void filltree()
@@ -50,7 +43,7 @@ namespace Darabjegyzék_feldolgozó.GUI.CommonListing
                 if (@interface.Filtering.filterActive(@interface.Machines[i].Id))
                 {
                     treeView1.Nodes.Add(@interface.Machines[i].Id);
-                    using (CommonCounter counter = new CommonCounter(@interface.Machines[i].Raws))
+                    using (CommonCounter counter = new CommonCounter(@interface.Machines[i].Raws,@interface.Filtering))
                     {
                         List<CountCommon> count = counter.dothecount();
                         for (int j = 0; j < count.Count; j++)
@@ -81,17 +74,6 @@ namespace Darabjegyzék_feldolgozó.GUI.CommonListing
             }
             part.Nodes.Add(line);
 
-        }
-
-        public void Resizer(object sender, EventArgs e)
-        {
-            setsize(((Form1)sender).Size);
-        }
-
-        private void setsize(Size formsize)
-        {
-            Size = new Size(formsize.Width - Location.X - 10, formsize.Height - Location.Y - 10);
-            treeView1.Size = new Size(Width - treeView1.Location.X - 20, Height - treeView1.Location.Y - 40);
         }
     }
 }

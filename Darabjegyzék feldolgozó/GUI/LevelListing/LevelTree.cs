@@ -32,7 +32,7 @@ namespace Darabjegyzék_feldolgozó.GUI.LevelList
                     tree.Nodes.Add(@interface.Machines[i].Id);
                     using (CountLinear linear = new CountLinear(@interface.Machines[i].Raws))
                     {
-                        List<Countlevels> levels = linear.dothecount();
+                        List<Countlevels> levels = linear.dothecount(@interface.Filtering);
                         for (int j = 0; j < levels.Count; j++)
                         {
                             tree.Nodes[tree.Nodes.Count - 1].Nodes.Add("Levels: " + levels[j].Level.ToString() + "; Count: " + levels[j].Count + "; Zeroes: " + levels[j].Zeroes);
@@ -51,7 +51,7 @@ namespace Darabjegyzék_feldolgozó.GUI.LevelList
             {
                 if (@interface.Filtering.filterActive(@interface.Machines[i].Id))
                 {
-                    using (CountTree counter = new CountTree(@interface.Machines[i].Parts))
+                    using (CountTree counter = new CountTree(@interface.Machines[i].Parts,@interface.Filtering))
                     {
                         List<CountNode> counted = counter.count(@interface.Machines[i].Id);
                         string name = "Name: " + counted[0].Id + "; Level: " + counted[0].Level + "; Counted: " + counted[0].Count + "; Zeroes: " + counted[0].Zeroes;

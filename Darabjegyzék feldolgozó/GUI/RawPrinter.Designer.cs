@@ -35,16 +35,16 @@
             // 
             // treeView1
             // 
-            treeView1.Location = new Point(3, 105);
+            treeView1.Location = new Point(3, 115);
             treeView1.Name = "treeView1";
-            treeView1.Size = new Size(797, 469);
+            treeView1.Size = new Size(797, 459);
             treeView1.TabIndex = 1;
             // 
             // label1
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Sitka Text", 12F, FontStyle.Bold, GraphicsUnit.Point, 238);
-            label1.Location = new Point(3, 79);
+            label1.Location = new Point(3, 89);
             label1.Name = "label1";
             label1.Size = new Size(164, 23);
             label1.TabIndex = 2;

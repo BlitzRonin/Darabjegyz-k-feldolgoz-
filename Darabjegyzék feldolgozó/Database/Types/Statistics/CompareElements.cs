@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Darabjegyzék_feldolgozó.Database.Types.Machines;
 
-namespace Darabjegyzék_feldolgozó.Database.Types.Statistics.Compare
+namespace Darabjegyzék_feldolgozó.Database.Types.Statistics
 {
     public class CompareElements
     {

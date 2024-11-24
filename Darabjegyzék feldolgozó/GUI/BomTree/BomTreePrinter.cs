@@ -17,24 +17,17 @@ namespace Darabjegyzék_feldolgozó.GUI
     {
         DatabaseInterface @interface;
 
-        public BomTreePrinter(DatabaseInterface @interface, Size formsize)
+        public BomTreePrinter(DatabaseInterface @interface)
         {
             InitializeComponent();
             filterMenu1.setfilter(@interface.Filtering);
-            pr(@interface,formsize);
         }
 
-        private void pr(DatabaseInterface @interface, Size formsize)
+        public void Printthis(DatabaseInterface @interface)
         {
             this.@interface = @interface;
-            setsize(formsize);
             filltree();
             BringToFront();
-        }
-
-        public void Printthis(DatabaseInterface @interface,Size formsize)
-        {
-            pr(@interface, formsize);
         }
 
         private void filltree()
@@ -43,17 +36,6 @@ namespace Darabjegyzék_feldolgozó.GUI
             {
                 treeBuilder.buildTree(treeView1);
             }
-        }
-
-        public void Resizer(object sender, EventArgs e)
-        {
-            setsize(((Form1)sender).Size);
-        }
-
-        private void setsize(Size formsize)
-        {
-            Size = new Size(formsize.Width - Location.X - 10, formsize.Height - Location.Y - 10);
-            treeView1.Size = new Size(Width - treeView1.Location.X - 20, Height - treeView1.Location.Y - 40);
         }
     }
 }

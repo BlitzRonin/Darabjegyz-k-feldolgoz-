@@ -36,10 +36,13 @@ namespace Darabjegyzék_feldolgozó.GUI.BomList
         {
             for (int i = 0; i < basedata.Count; i++)
             {
-                printpart(basetree, basedata[i]);
-                if (basedata[i].Parts != null)
+                if (@interface.Filtering.filterElement(basedata[i]))
                 {
-                    makeTree(basetree.Nodes[basetree.Nodes.Count-1], ref basedata[i].Parts);
+                    printpart(basetree, basedata[i]);
+                    if (basedata[i].Parts != null)
+                    {
+                        makeTree(basetree.Nodes[basetree.Nodes.Count - 1], ref basedata[i].Parts);
+                    }
                 }
             }
         }

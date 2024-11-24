@@ -47,7 +47,7 @@
             menuStrip1.Items.AddRange(new ToolStripItem[] { fToolStripMenuItem, dataToolStripMenuItem, statisticsToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new Size(800, 24);
+            menuStrip1.Size = new Size(831, 24);
             menuStrip1.TabIndex = 8;
             menuStrip1.Text = "menuStrip1";
             // 
@@ -82,14 +82,14 @@
             // rawToolStripMenuItem
             // 
             rawToolStripMenuItem.Name = "rawToolStripMenuItem";
-            rawToolStripMenuItem.Size = new Size(180, 22);
+            rawToolStripMenuItem.Size = new Size(96, 22);
             rawToolStripMenuItem.Text = "Raw";
             rawToolStripMenuItem.Click += rawToolStripMenuItem_Click;
             // 
             // treeToolStripMenuItem
             // 
             treeToolStripMenuItem.Name = "treeToolStripMenuItem";
-            treeToolStripMenuItem.Size = new Size(180, 22);
+            treeToolStripMenuItem.Size = new Size(96, 22);
             treeToolStripMenuItem.Text = "Tree";
             treeToolStripMenuItem.Click += treeToolStripMenuItem_Click;
             // 
@@ -125,8 +125,9 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 548);
+            ClientSize = new Size(831, 615);
             Controls.Add(menuStrip1);
+            FormBorderStyle = FormBorderStyle.Fixed3D;
             MainMenuStrip = menuStrip1;
             MinimumSize = new Size(473, 452);
             Name = "Form1";

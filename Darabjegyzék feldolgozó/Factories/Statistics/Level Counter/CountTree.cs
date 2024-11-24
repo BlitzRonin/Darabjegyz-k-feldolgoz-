@@ -1,4 +1,5 @@
 ﻿using Darabjegyzék_feldolgozó.Database;
+using Darabjegyzék_feldolgozó.Database.Types.Filters;
 using Darabjegyzék_feldolgozó.Database.Types.Machines;
 using Darabjegyzék_feldolgozó.Database.Types.Statistics;
 using System;
@@ -13,11 +14,13 @@ namespace Darabjegyzék_feldolgozó.Factories.Statistics.Counter.Tree
     //This class counts the levels individually and reletaionally binds them
     public class CountTree : IDisposable
     {
+        private Filter filter;
         private List<CountNode> basecount;
         private List<Part> basepart;
-        public CountTree(List<Part> basepart)
+        public CountTree(List<Part> basepart,Filter filter)
         {
             this.basepart = basepart;
+            this.filter = filter;
         }
 
         public List<CountNode> count(string id)
@@ -31,35 +34,38 @@ namespace Darabjegyzék_feldolgozó.Factories.Statistics.Counter.Tree
         {
             for (int i = 0; i < currpart.Count; i++)
             {
-                if (currpart[i].Level == 0)
+                if (filter.filterElement(currpart[i]))
                 {
-                    currcount[currcount.Count - 1].countzero();
-                }
-                else
-                {
-                    currcount[currcount.Count - 1].countlevel();
-                }
-                if (currpart[i].Parts != null)
-                {
-                    if(currcount[currcount.Count - 1].node == null)
+                    if (currpart[i].Level == 0)
                     {
-                        currcount[currcount.Count-1].node = [new CountNode(currpart[i].Id, currpart[i].Parts[0].Level)];
+                        currcount[currcount.Count - 1].countzero();
                     }
                     else
                     {
-                        currcount[currcount.Count - 1].node.Add(new CountNode(currpart[i].Id, currpart[i].Parts[0].Level));
+                        currcount[currcount.Count - 1].countlevel();
                     }
-                    makeCount(ref currpart[i].Parts,ref currcount[currcount.Count - 1].node);
-                }
-                else
-                {
-                    if (currcount[currcount.Count - 1].node == null)
+                    if (currpart[i].Parts != null)
                     {
-                        currcount[currcount.Count - 1].node = [new CountNode(currpart[i].Id, currpart[i].Level)];
+                        if (currcount[currcount.Count - 1].node == null)
+                        {
+                            currcount[currcount.Count - 1].node = [new CountNode(currpart[i].Id, currpart[i].Parts[0].Level)];
+                        }
+                        else
+                        {
+                            currcount[currcount.Count - 1].node.Add(new CountNode(currpart[i].Id, currpart[i].Parts[0].Level));
+                        }
+                        makeCount(ref currpart[i].Parts, ref currcount[currcount.Count - 1].node);
                     }
                     else
                     {
-                        currcount[currcount.Count - 1].node.Add(new CountNode(currpart[i].Id, currpart[i].Level));
+                        if (currcount[currcount.Count - 1].node == null)
+                        {
+                            currcount[currcount.Count - 1].node = [new CountNode(currpart[i].Id, currpart[i].Level)];
+                        }
+                        else
+                        {
+                            currcount[currcount.Count - 1].node.Add(new CountNode(currpart[i].Id, currpart[i].Level));
+                        }
                     }
                 }
             }

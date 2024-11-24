@@ -1,6 +1,6 @@
 ﻿namespace Darabjegyzék_feldolgozó.GUI.Compare
 {
-    partial class ComparePrinter
+    partial class CompareTreePrinter
     {
         /// <summary> 
         /// Required designer variable.
@@ -36,6 +36,7 @@
             label2 = new Label();
             label3 = new Label();
             comboBox2 = new ComboBox();
+            button1 = new Button();
             SuspendLayout();
             // 
             // filterMenu1
@@ -103,10 +104,21 @@
             comboBox2.Size = new Size(121, 23);
             comboBox2.TabIndex = 11;
             // 
+            // button1
+            // 
+            button1.Location = new Point(341, 116);
+            button1.Name = "button1";
+            button1.Size = new Size(97, 23);
+            button1.TabIndex = 12;
+            button1.Text = "Összehasonlít";
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
+            // 
             // ComparePrinter
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(button1);
             Controls.Add(comboBox2);
             Controls.Add(label3);
             Controls.Add(label2);
@@ -132,5 +144,6 @@
         private Label label2;
         private Label label3;
         private ComboBox comboBox2;
+        private Button button1;
     }
 }

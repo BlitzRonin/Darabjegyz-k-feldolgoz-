@@ -23,10 +23,9 @@ namespace Darabjegyzék_feldolgozó.GUI
             controlList = new List<BomControl>();
         }
 
-        public void Printthis(DatabaseInterface @interface, Size formsize)
+        public void Printthis(DatabaseInterface @interface)
         {
             this.@interface = @interface;
-            setsize(formsize);
             PrintBoms();
             BringToFront();
         }
@@ -71,17 +70,6 @@ namespace Darabjegyzék_feldolgozó.GUI
                 }
             }
             return false;
-        }
-
-        public void Resizer(object sender, EventArgs e)
-        {
-            setsize(((Form1)sender).Size);
-        }
-
-        private void setsize(Size formsize)
-        {
-            Size = new Size(formsize.Width - Location.X - 10, formsize.Height - Location.Y - 10);
-            flowLayoutPanel1.Size = new Size(Width - flowLayoutPanel1.Location.X - 20, Height - flowLayoutPanel1.Location.Y - 40);
         }
     }
 }

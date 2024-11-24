@@ -18,22 +18,15 @@ namespace Darabjegyzék_feldolgozó.GUI
     {
         private DatabaseInterface @interface;
 
-        public RawPrinter(DatabaseInterface @interface,Size formsize)
+        public RawPrinter(DatabaseInterface @interface)
         {
             InitializeComponent();
-            pr(@interface, formsize);
             filter1.setfilter(@interface.Filtering);
         }
 
-        public void Printthis(DatabaseInterface @interface, Size formsize)
-        {
-            pr(@interface,formsize);
-        }
-
-        private void pr(DatabaseInterface @interface, Size formsize)
+        public void Printthis(DatabaseInterface @interface)
         {
             this.@interface = @interface;
-            setsize(formsize);
             filltree();
             BringToFront();
         }
@@ -70,17 +63,6 @@ namespace Darabjegyzék_feldolgozó.GUI
                 }
             }
             treeView1.EndUpdate();
-        }
-
-        public void Resizer(object sender, EventArgs e)
-        {
-            setsize(((Form1)sender).Size);
-        }
-
-        private void setsize(Size formsize)
-        {
-            Size = new Size(formsize.Width - Location.X - 10, formsize.Height - Location.Y - 10);
-            treeView1.Size = new Size(Width - treeView1.Location.X - 20, Height - treeView1.Location.Y - 40);
         }
     }
 }
