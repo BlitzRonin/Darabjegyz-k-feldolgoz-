@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Darabjegyzék_feldolgozó.Factories.Statistics;
-using Darabjegyzék_feldolgozó.Database.Types.Statistics;
+using Darabjegyzék_feldolgozó.Database.Types.Statistics.Compare;
 
 namespace Darabjegyzék_feldolgozó.GUI.CompareHandling
 {
