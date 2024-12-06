@@ -1,55 +1,40 @@
 using Darabjegyzék_feldolgozó.Database;
-using Darabjegyzék_feldolgozó.Factories.Statistics.Counter.Linear;
 using Darabjegyzék_feldolgozó.GUI;
-using Darabjegyzék_feldolgozó.GUI.CommonListing;
 using Darabjegyzék_feldolgozó.GUI.Compare;
-using System.Windows.Forms;
+using Darabjegyzék_feldolgozó.GUI.Simple.Drawers;
 
 namespace Darabjegyzék_feldolgozó
 {
     public partial class Form1 : Form
     {
-        private CompareTreePrinter compareprinter;
-        private BomTreePrinter bomlister;
-        private LevelTreePrinter levellister;
-        private CommonPrinter commonlister;
-        private BomHandlerMenu bomhandlermenu;
-        private RawPrinter rawlister;
         private DatabaseInterface databaseInterface;
         private string path;
+        private event EventHandler dataadded;
+        private CompareTreePrinter compareprinter;
+        private BomHandlerMenu bomhandlermenu;
+        private BasePanel rawpanel;
+        private BasePanel bompanel;
+        private BasePanel commonpanel;
+        private BasePanel levelpanel;
 
         public Form1()
         {
             InitializeComponent();
             databaseInterface = new DatabaseHandler();
             path = Application.StartupPath;
+            dataadded += checkfirst;
+            databaseInterface.Filtering.filteringevent += checkfirst;
         }
 
-        private void dotheredraw(Type zero)
+        private void checkfirst(object sender, EventArgs e)
         {
-            if (zero == typeof(BomTreePrinter))
+            if (typeof(IPrinter).IsAssignableFrom(sender.GetType()))
             {
-                bomlister.Printthis(databaseInterface);
-            }
-            else if (zero == typeof(LevelTreePrinter))
-            {
-                levellister.Printthis(databaseInterface);
-            }
-            else if (zero == typeof(CommonPrinter))
-            {
-                commonlister.Printthis(databaseInterface);
-            }
-            else if (zero == typeof(BomHandlerMenu))
-            {
-                bomhandlermenu.Printthis(databaseInterface);
-            }
-            else if (zero == typeof(RawPrinter))
-            {
-                rawlister.Printthis(databaseInterface);
+                ((IPrinter)sender).PrintIt(databaseInterface);
             }
         }
 
-        private void newBomToolStripMenuItem_Click(object sender, EventArgs e)
+        private async void newBomToolStripMenuItem_Click(object sender, EventArgs e)
         {
             try
             {
@@ -57,13 +42,13 @@ namespace Darabjegyzék_feldolgozó
                 {
                     openFileDialog.InitialDirectory = path;
                     openFileDialog.Multiselect = true;
-                    openFileDialog.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
-                    openFileDialog.FilterIndex = 2;
+                    openFileDialog.Filter = "Comma-separated values (*.csv)|*.csv|All files (*.*)|*.*";
+                    openFileDialog.FilterIndex = 1;
 
                     if (openFileDialog.ShowDialog() == DialogResult.OK)
                     {
-                        multiselectfiles(openFileDialog.FileNames);
-                        MessageBox.Show("The file is successfully loaded.");
+                        await multiselectfiles(openFileDialog.FileNames);
+                        dataadded?.Invoke(Controls[0], EventArgs.Empty);
                     }
                     else
                     {
@@ -75,16 +60,14 @@ namespace Darabjegyzék_feldolgozó
             {
                 MessageBox.Show(ex.Message);
             }
-            dotheredraw(Controls[0].GetType());
         }
 
-        private void multiselectfiles(string[] paths)       
+        private async Task multiselectfiles(string[] paths)
         {
-            for (int i = 0;i < paths.Length ; i++)
-            {
-                databaseInterface.addNew(paths[i]);
-            }
+            string res = "";
+            await Task.Run(() => res = databaseInterface.addNews(paths));
             path = paths[0];
+            MessageBox.Show(res);
         }
 
         private void manageBomToolStripMenuItem_Click(object sender, EventArgs e)
@@ -94,38 +77,37 @@ namespace Darabjegyzék_feldolgozó
                 bomhandlermenu = new BomHandlerMenu();
                 Controls.Add(bomhandlermenu);
             }
-            bomhandlermenu.Printthis(databaseInterface);
+            bomhandlermenu.PrintIt(databaseInterface);
         }
 
         private void treeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (!Controls.Contains(bomlister))
+            if (!Controls.Contains(commonpanel))
             {
-                bomlister = new BomTreePrinter(databaseInterface);
-                Controls.Add(bomlister);
-
+                commonpanel = new BasePanel(new BomPrinterDraw(),databaseInterface);
+                Controls.Add(commonpanel);
             }
-            bomlister.Printthis(databaseInterface);
+            commonpanel.PrintIt(databaseInterface);
         }
 
         private void bOMGyakoriságToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (!Controls.Contains(commonlister))
+            if (!Controls.Contains(commonpanel))
             {
-                commonlister = new CommonPrinter(databaseInterface);
-                Controls.Add(commonlister);
+                bompanel = new BasePanel(new CommonPrinterDraw(), databaseInterface);
+                Controls.Add(bompanel);
             }
-            commonlister.Printthis(databaseInterface);
+            bompanel.PrintIt(databaseInterface);
         }
 
         private void szintKimutatásToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (!Controls.Contains(levellister))
+            if (!Controls.Contains(commonpanel))
             {
-                levellister = new LevelTreePrinter(databaseInterface);
-                Controls.Add(levellister);
+                levelpanel = new BasePanel(new LevelPrinterDraw(), databaseInterface);
+                Controls.Add(levelpanel);
             }
-            levellister.Printthis(databaseInterface);
+            levelpanel.PrintIt(databaseInterface);
         }
 
         private void bOMÖsszehasonlításToolStripMenuItem_Click(object sender, EventArgs e)
@@ -135,17 +117,17 @@ namespace Darabjegyzék_feldolgozó
                 compareprinter = new CompareTreePrinter(databaseInterface);
                 Controls.Add(compareprinter);
             }
-            compareprinter.Printthis(databaseInterface);
+            compareprinter.PrintIt(databaseInterface);
         }
 
         private void rawToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (!Controls.Contains(rawlister))
+            if (!Controls.Contains(rawpanel))
             {
-                rawlister = new RawPrinter(databaseInterface);
-                Controls.Add(rawlister);
+                rawpanel = new BasePanel(new RawPrinterDraw(), databaseInterface);
+                Controls.Add(rawpanel);
             }
-            rawlister.Printthis(databaseInterface);
+            rawpanel.PrintIt(databaseInterface);
         }
     }
 }

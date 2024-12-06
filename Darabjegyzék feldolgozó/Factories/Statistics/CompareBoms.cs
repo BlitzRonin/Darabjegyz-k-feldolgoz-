@@ -21,9 +21,9 @@ namespace Darabjegyzék_feldolgozó.Factories.Statistics
 
         private List<CompareElements> resultA;
         private List<CompareElements> resultB;
-        private Filter filter;
+        private FilterHandler filter;
 
-        public CompareBoms(Filter filter)
+        public CompareBoms(FilterHandler filter)
         { 
             this.filter = filter;
         }
@@ -378,7 +378,7 @@ namespace Darabjegyzék_feldolgozó.Factories.Statistics
 
         private void Abigger(ref List<CompareResults> result,ref Dictionary<string,List<int>> bigger,ref Dictionary<string,List<int>> smaller,ref List<Part> listA, ref List<Part> listB)
         {
-            if (listA[bigger[smaller.ElementAt(0).Key][0]].Quantity != listB[smaller.ElementAt(0).Value[0]].Quantity)
+            if (listA[bigger[smaller.ElementAt(0).Key][0]].Quantity != listB[smaller.ElementAt(0).Value[0]].Quantity || theyarentthesame(listA[bigger[smaller.ElementAt(0).Key][0]].Parts, listB[smaller.ElementAt(0).Value[0]].Parts))
             {
                 result[smaller.ElementAt(0).Value[0]].B = "changed";
                 result[bigger[smaller.ElementAt(0).Key][0]].A = "changed";
@@ -392,7 +392,7 @@ namespace Darabjegyzék_feldolgozó.Factories.Statistics
 
         private void Bbigger(ref List<CompareResults> result,ref Dictionary<string, List<int>> bigger,ref Dictionary<string, List<int>> smaller, ref List<Part> listA, ref List<Part> listB)
         {
-            if (listB[bigger[smaller.ElementAt(0).Key][0]].Quantity != listA[smaller.ElementAt(0).Value[0]].Quantity)
+            if (listB[bigger[smaller.ElementAt(0).Key][0]].Quantity != listA[smaller.ElementAt(0).Value[0]].Quantity || theyarentthesame(listA[smaller.ElementAt(0).Value[0]].Parts, listB[bigger[smaller.ElementAt(0).Key][0]].Parts))
             {
                 result[smaller.ElementAt(0).Value[0]].A = "changed";
                 result[bigger[smaller.ElementAt(0).Key][0]].B = "changed";
@@ -417,6 +417,30 @@ namespace Darabjegyzék_feldolgozó.Factories.Statistics
                     B.Add(new CompareElements(fitted[i].B));
                 }
             }
+        }
+
+        private bool theyarentthesame(List<Part> partA,List<Part> partB)
+        {
+            if (partA != null && partB == null || partA == null && partB != null)
+            {
+                return true;
+            }
+            if(partA == null && partB == null)
+            {
+                return false;
+            }
+            if(partA.Count != partB.Count)
+            {
+                return true;
+            }
+            for(int i = 0;i<partA.Count;i++)
+            {
+                if (partA[i].Id != partB[i].Id || partA[i].Quantity != partB[i].Quantity)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

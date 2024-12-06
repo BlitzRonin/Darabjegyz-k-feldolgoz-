@@ -14,16 +14,16 @@ namespace Darabjegyzék_feldolgozó.GUI.BomHandling
 {
     public partial class BomControl : UserControl
     {
-        private Filter filter;
+        private FilterHandler filter;
         private DMachine machine;
-        public BomControl(DMachine machine,Filter filter)
+        public BomControl(DMachine machine,FilterHandler filter)
         {
             InitializeComponent();
             this.machine = machine;
             this.filter = filter;
             label1.Text = machine.Id;
             label2.Text = machine.Raws.Count.ToString();
-            if(filter.filterActive(machine.Id))
+            if (filter.Active[machine.Id])
             {
                 printactive();
             }
@@ -35,7 +35,7 @@ namespace Darabjegyzék_feldolgozó.GUI.BomHandling
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (filter.filterActive(machine.Id))
+            if (filter.Active[machine.Id])
             {
                 printinact();
             }
@@ -43,7 +43,7 @@ namespace Darabjegyzék_feldolgozó.GUI.BomHandling
             {
                 printactive();
             }
-            filter.setActive(machine.Id);
+            filter.Active.setFilter(machine.Id);
         }
 
         private void printactive()

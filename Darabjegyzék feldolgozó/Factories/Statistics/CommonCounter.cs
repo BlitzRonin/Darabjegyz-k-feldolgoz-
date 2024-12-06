@@ -12,22 +12,24 @@ namespace Darabjegyzék_feldolgozó.Factories.Statistics
     //This class counts how many instances of distinct elements are in a bom and on wich level
     public class CommonCounter : IDisposable
     {
-        private Filter filter;
+        public int HowMuchLVL { get { return howmuchlvl; } }
+        private FilterHandler filter;
         private List<Raw> @interface;
-        public CommonCounter(List<Raw> raws,Filter filter)
+        private int howmuchlvl;
+        public CommonCounter(List<Raw> raws,FilterHandler filter)
         {
             @interface = raws;
             this.filter = filter;
         }
 
-        public List<CountCommon> dothecount()
+        public List<CountCommon> dothecount(string id)
         {
             List<CountCommon> commons = new List<CountCommon>();
             for (int i = 0; i < @interface.Count; i++)
             {
-                int index;
-                if (filter.filterElement(@interface[i]))
+                if(filter.filterElement(id, @interface[i]))
                 {
+                    int index;
                     if ((index = Exist(@interface[i].Id, commons)) >= 0)
                     {
                         if (@interface[i].Level == 0)
@@ -59,6 +61,10 @@ namespace Darabjegyzék_feldolgozó.Factories.Statistics
                                 }
                             }
                         }
+                    }
+                    if (howmuchlvl < @interface[i].Level)
+                    {
+                        howmuchlvl = @interface[i].Level;
                     }
                 }
             }

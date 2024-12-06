@@ -11,9 +11,9 @@ namespace Darabjegyzék_feldolgozó.Database
 {
     public interface DatabaseInterface
     {
-        Filter Filtering { get; }
+        FilterHandler Filtering { get; }
         List<DMachine> Machines { get; }
-        void addNew(string path);
+        string addNews(string[] paths);
         void removeThis(string id);
         void removeThis(int index);
     }

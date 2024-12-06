@@ -8,27 +8,27 @@ using System.Threading.Tasks;
 using Darabjegyzék_feldolgozó.Factories.Statistics;
 using Darabjegyzék_feldolgozó.Database.Types.Statistics.Compare;
 
-namespace Darabjegyzék_feldolgozó.GUI.CompareHandling
+namespace Darabjegyzék_feldolgozó.GUI.Special.CompareHandling
 {
     public class CompareTree : IDisposable
     {
         private DatabaseInterface @interface;
 
-        public CompareTree(DatabaseInterface @interface) 
+        public CompareTree(DatabaseInterface @interface)
         {
             this.@interface = @interface;
         }
 
-        public void buildTree(TreeView tree, List<CompareElements> compare,DMachine machine)
+        public void buildTree(TreeView tree, List<CompareElements> compare, DMachine machine)
         {
             tree.Nodes.Clear();
             tree.BeginUpdate();
             tree.Nodes.Add(machine.Id);
-            makeTree(tree.Nodes[0], ref machine.Parts,ref compare);
+            makeTree(tree.Nodes[0], ref machine.Parts, ref compare);
             tree.EndUpdate();
         }
 
-        private void makeTree(TreeNode basetree, ref List<Part> basedata,ref List<CompareElements> compare)
+        private void makeTree(TreeNode basetree, ref List<Part> basedata, ref List<CompareElements> compare)
         {
             for (int i = 0; i < basedata.Count; i++)
             {
@@ -40,7 +40,7 @@ namespace Darabjegyzék_feldolgozó.GUI.CompareHandling
             }
         }
 
-        private void printpart(TreeNode part, Part thispart,string state)
+        private void printpart(TreeNode part, Part thispart, string state)
         {
             string name = "Level: " + thispart.Level + "; Mat-No/Doc: " + thispart.Id + "; Docu-No/He: " + thispart.Serial;
             string subs = "Item: " + thispart.Item + "; Quantity: " + thispart.Quantity + "; UM: " + thispart.UM + "; Kind: " + thispart.Kind + "; PTYP: " + thispart.PTYP + "; Valid From: ";
@@ -56,25 +56,25 @@ namespace Darabjegyzék_feldolgozó.GUI.CompareHandling
             subs += state;
             part.Nodes.Add(name);
             part.Nodes[part.Nodes.Count - 1].Nodes.Add(subs);
-            colorthis(part.Nodes[part.Nodes.Count-1],state);
+            colorthis(part.Nodes[part.Nodes.Count - 1], state);
         }
 
-        private void colorthis(TreeNode thispart,string state)
+        private void colorthis(TreeNode thispart, string state)
         {
-            switch(state)
+            switch (state)
             {
                 case "changed":
-                    thispart.ForeColor = Color.Yellow;
-                    thispart.Nodes[thispart.Nodes.Count - 1].ForeColor = Color.Yellow;
-                break;
+                    thispart.ForeColor = Color.DarkBlue;
+                    thispart.Nodes[thispart.Nodes.Count - 1].ForeColor = Color.DarkBlue;
+                    break;
                 case "same":
                     thispart.ForeColor = Color.Green;
                     thispart.Nodes[thispart.Nodes.Count - 1].ForeColor = Color.Green;
-                break;
+                    break;
                 case "different":
                     thispart.ForeColor = Color.Red;
                     thispart.Nodes[thispart.Nodes.Count - 1].ForeColor = Color.Red;
-                break;
+                    break;
             }
         }
 

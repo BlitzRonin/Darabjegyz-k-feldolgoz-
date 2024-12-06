@@ -11,32 +11,21 @@ namespace Darabjegyzék_feldolgozó.Factories.Preppers
     //This class creates the Raws from the File
     public class RawPrepper : IDisposable
     {
-        private DMachine prepared;
-        public DMachine prepper(string path, List<DMachine> listsofar)
+        public List<Raw> prepper(FileReader readit)
         {
-            using (FileReader readit = new FileReader(path))
-            {
-                prepsequence(readit, path, listsofar);
-            }
-            return prepared;
-        }
-
-        private void prepsequence(FileReader readit, string id,List<DMachine> listsofar)
-        {
-            string[] filenameraw = id.Split('\\');
-            string name = noduplic(filenameraw[filenameraw.Length - 1].Split('.')[0], listsofar);
-            prepared = new DMachine(name);
+            List<Raw> result = new List<Raw>();
             string line;
             for (int i = 0; (line = readit.readALine()) != null; i++)
             {
                 if (i != 0)
                 {
-                    convert(line);
+                    result.Add(convert(line));
                 }
             }
+            return result;
         }
 
-        private void convert(string line)
+        private Raw convert(string line)
         {
             string[] temp = line.Split(";");
             int level = Convert.ToInt16(temp[0]);
@@ -65,7 +54,7 @@ namespace Darabjegyzék_feldolgozó.Factories.Preppers
                 validto = getdate(temp[8]);
             }
             string serial = temp[9];
-            prepared.AddRaw(level, item, quantity, um, id, kind, ptyp, validfrom, validto, serial);
+            return new Raw(level, item, quantity, um, id, kind, ptyp, validfrom, validto, serial);
         }
 
         private DateTime getdate(string input)
@@ -81,31 +70,6 @@ namespace Darabjegyzék_feldolgozó.Factories.Preppers
                 temp = DateTime.ParseExact(input, "dd.MM.yyyy", null);
             }
             return temp;
-        }
-
-
-        //This method makes sure the machine name cannotbe duplicated as it is the unique id of the the BOM
-        private string noduplic(string id,List<DMachine> listsofar)
-        {
-            int count;
-            if ((count = countduplic(id,listsofar)) > 0)
-            { 
-                id = id+" ("+count+")";
-            }
-            return id;
-        }
-        //This method counts how much duplicate there is
-        private int countduplic(string id, List<DMachine> listsofar)
-        {
-            int count = 0;
-            for (int i = 0; i < listsofar.Count;i++)
-            {
-                if (listsofar[i].Id == id)
-                {
-                    count++;
-                }
-            }
-            return count;       
         }
 
         public void Dispose()

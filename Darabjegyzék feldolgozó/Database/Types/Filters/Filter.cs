@@ -1,6 +1,4 @@
-﻿using Darabjegyzék_feldolgozó.Database.Types.Machines;
-using Darabjegyzék_feldolgozó.GUI.Other;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,50 +8,59 @@ namespace Darabjegyzék_feldolgozó.Database.Types.Filters
 {
     public class Filter
     {
-        private ActiveFilter active;
-        private DateFilter date;
-        public Filter() 
-        { 
-            active = new ActiveFilter();
-            date = new DateFilter();
-        }
+        public int Count { get { return filter.Count; } }
+        public bool Filtered { get { return filtered; } }
 
-        public void addActive(string id)
+        private Dictionary<string, bool> filter;
+        private bool filtered;
+        public Filter()
         {
-            active.addActive(id);
+            filter = new Dictionary<string, bool>();
+            filtered = false;
         }
 
-        public void setActive(string id)
+        public bool this[string id]
         {
-            active.setActive(id);
+            get { return filter[id]; }
         }
 
-        public bool filterActive(string id)
+        public KeyValuePair<string, bool> ElementAtIndex(int index)
         {
-            return active.filterActive(id);
+            return filter.ElementAt(index);
         }
 
-        public void removeActive(string id)
+
+        public void AddFilter(string id)
         {
-            active.removeActive(id);
+            if (!filter.ContainsKey(id))
+            {
+                filter.Add(id,true);
+            }
         }
 
-        public void setElement(object sender, EventArgs e)
+        public void setFilter(string id)
         {
-            IFilterMenu data = (IFilterMenu)((Button)sender).Parent;
-            date.set(data.MinDate, data.MinDate);
+            if (filter[id])
+            {
+                filter[id] = false;
+            }
+            else
+            {
+                filter[id] = true;
+            }
         }
 
-        public void resetElement(object sender, EventArgs e)
+        public void RemoveFilter(string id)
         {
-            date.reset();
+            filter.Remove(id);
         }
 
-        public bool filterElement(Raw thismach)
-        { 
-            bool thisfilter = true;
-            thisfilter = date.filterDate(thismach.Validfrom,thismach.Validto);
-            return thisfilter;
+        public void ResetFilter()
+        {
+            for (int i = 0; i < filter.Count; i++)
+            {
+                filter[filter.ElementAt(i).Key] = true;
+            }
         }
     }
 }

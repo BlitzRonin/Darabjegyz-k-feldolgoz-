@@ -14,10 +14,10 @@ namespace Darabjegyzék_feldolgozó.Factories.Statistics.Counter.Tree
     //This class counts the levels individually and reletaionally binds them
     public class CountTree : IDisposable
     {
-        private Filter filter;
+        private FilterHandler filter;
         private List<CountNode> basecount;
         private List<Part> basepart;
-        public CountTree(List<Part> basepart,Filter filter)
+        public CountTree(List<Part> basepart,FilterHandler filter)
         {
             this.basepart = basepart;
             this.filter = filter;
@@ -25,16 +25,16 @@ namespace Darabjegyzék_feldolgozó.Factories.Statistics.Counter.Tree
 
         public List<CountNode> count(string id)
         {
-            basecount = [new CountNode(id,1)];
-            makeCount(ref basepart,ref basecount);
-            return basecount;
+            basecount = [new CountNode("",1)];
+            makeCount(id,ref basepart,ref basecount);
+            return basecount[0].node;
         }
 
-        private void makeCount(ref List<Part> currpart ,ref List<CountNode> currcount)
+        private void makeCount(string id,ref List<Part> currpart ,ref List<CountNode> currcount)
         {
             for (int i = 0; i < currpart.Count; i++)
             {
-                if (filter.filterElement(currpart[i]))
+                if (filter.filterElement(id,currpart[i]))
                 {
                     if (currpart[i].Level == 0)
                     {
@@ -54,7 +54,7 @@ namespace Darabjegyzék_feldolgozó.Factories.Statistics.Counter.Tree
                         {
                             currcount[currcount.Count - 1].node.Add(new CountNode(currpart[i].Id, currpart[i].Parts[0].Level));
                         }
-                        makeCount(ref currpart[i].Parts, ref currcount[currcount.Count - 1].node);
+                        makeCount(id,ref currpart[i].Parts, ref currcount[currcount.Count - 1].node);
                     }
                     else
                     {

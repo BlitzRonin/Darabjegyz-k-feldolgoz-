@@ -40,7 +40,7 @@
             flowLayoutPanel1.FlowDirection = FlowDirection.TopDown;
             flowLayoutPanel1.Location = new Point(3, 75);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
-            flowLayoutPanel1.Size = new Size(686, 417);
+            flowLayoutPanel1.Size = new Size(796, 499);
             flowLayoutPanel1.TabIndex = 0;
             // 
             // label1
@@ -94,7 +94,7 @@
             Controls.Add(flowLayoutPanel1);
             Location = new Point(12, 27);
             Name = "BomHandlerMenu";
-            Size = new Size(692, 495);
+            Size = new Size(802, 577);
             ResumeLayout(false);
             PerformLayout();
         }

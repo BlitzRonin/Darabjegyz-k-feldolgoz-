@@ -19,12 +19,12 @@ namespace Darabjegyzék_feldolgozó.Factories.Statistics.Counter.Linear
             @interface = raws;
         }
 
-        public List<Countlevels> dothecount(Filter filter)
+        public List<Countlevels> dothecount(string id,FilterHandler filter)
         {
             List<Countlevels> levels = new List<Countlevels>();
             for (int i = 0; i < @interface.Count; i++)
             {
-                if (filter.filterElement(@interface[i]))
+                if (filter.filterElement(id,@interface[i]))
                 {
                     if (@interface[i].Level > levels.Count)
                     {
