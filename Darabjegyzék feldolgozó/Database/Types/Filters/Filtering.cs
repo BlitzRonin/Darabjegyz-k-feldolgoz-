@@ -33,5 +33,10 @@ namespace Darabjegyzék_feldolgozó.Database.Types.Filters
         {
             filter.Remove(id);
         }
+
+        public bool Contains(string id)
+        {
+            return filter.ContainsKey(id);
+        }
     }
 }

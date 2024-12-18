@@ -9,14 +9,12 @@ namespace Darabjegyzék_feldolgozó.Database.Types.Filters
     public class Filter
     {
         public int Count { get { return filter.Count; } }
-        public bool Filtered { get { return filtered; } }
 
         private Dictionary<string, bool> filter;
-        private bool filtered;
+
         public Filter()
         {
             filter = new Dictionary<string, bool>();
-            filtered = false;
         }
 
         public bool this[string id]

@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Darabjegyzék_feldolgozó.Factories.Statistics;
 using Darabjegyzék_feldolgozó.Database.Types.Statistics.Compare;
+using Darabjegyzék_feldolgozó.Database.Types.Filters;
 
 namespace Darabjegyzék_feldolgozó.GUI.Special.CompareHandling
 {
@@ -24,18 +25,21 @@ namespace Darabjegyzék_feldolgozó.GUI.Special.CompareHandling
             tree.Nodes.Clear();
             tree.BeginUpdate();
             tree.Nodes.Add(machine.Id);
-            makeTree(tree.Nodes[0], ref machine.Parts, ref compare);
+            makeTree(tree.Nodes[0], ref machine.Parts, ref compare,machine.Id);
             tree.EndUpdate();
         }
 
-        private void makeTree(TreeNode basetree, ref List<Part> basedata, ref List<CompareElements> compare)
+        private void makeTree(TreeNode basetree, ref List<Part> basedata, ref List<CompareElements> compare,string id)
         {
             for (int i = 0; i < basedata.Count; i++)
             {
-                printpart(basetree, basedata[i], compare[i].Mode);
-                if (basedata[i].Parts != null)
+                if (@interface.Filtering.filterElement(id, basedata[i]))
                 {
-                    makeTree(basetree.Nodes[basetree.Nodes.Count - 1], ref basedata[i].Parts, ref compare[i].relation);
+                    printpart(basetree, basedata[i], compare[i].Mode);
+                    if (basedata[i].Parts != null)
+                    {
+                        makeTree(basetree.Nodes[basetree.Nodes.Count - 1], ref basedata[i].Parts, ref compare[i].relation,id);
+                    }
                 }
             }
         }

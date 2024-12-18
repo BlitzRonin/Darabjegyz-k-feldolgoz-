@@ -13,9 +13,11 @@ namespace Darabjegyzék_feldolgozó.Factories.Statistics
     public class CommonCounter : IDisposable
     {
         public int HowMuchLVL { get { return howmuchlvl; } }
+
         private FilterHandler filter;
         private List<Raw> @interface;
         private int howmuchlvl;
+
         public CommonCounter(List<Raw> raws,FilterHandler filter)
         {
             @interface = raws;
@@ -50,7 +52,7 @@ namespace Darabjegyzék_feldolgozó.Factories.Statistics
                     }
                     else
                     {
-                        commons.Add(new CountCommon(@interface[i].Id, @interface[i].Level, @interface[i].Quantity));
+                        commons.Add(new CountCommon(@interface[i].Id));
                         if (@interface[i].Level == 0)
                         {
                             for (int j = i; j > 0; j--)
@@ -60,6 +62,12 @@ namespace Darabjegyzék_feldolgozó.Factories.Statistics
                                     commons[commons.Count - 1].countit(@interface[i].Quantity, @interface[j].Level);
                                 }
                             }
+                            commons[commons.Count -1].Zero = true;
+                        }
+                        else
+                        {
+                            commons[commons.Count - 1].countit(@interface[i].Quantity, @interface[i].Level);
+                            commons[commons.Count - 1].Zero = false;
                         }
                     }
                     if (howmuchlvl < @interface[i].Level)

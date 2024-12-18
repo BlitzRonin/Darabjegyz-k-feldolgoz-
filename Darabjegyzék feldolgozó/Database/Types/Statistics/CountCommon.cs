@@ -10,24 +10,15 @@ namespace Darabjegyzék_feldolgozó.Database.Types.Statistics
     public class CountCommon
     {
         public string Id { get; }
-        public bool Zero { get; }
+        public bool Zero { get; set; }
         public Dictionary<int,double> Levels { get { return levels; } }
 
         private Dictionary<int, double> levels;
 
-        public CountCommon(string id,int level,double input)
+        public CountCommon(string id)
         {
             Id = id;
             levels = new Dictionary<int, double>();
-            if(level != 0)
-            {
-                countit(input,level);
-                Zero = false;
-            }
-            else
-            {
-                Zero = true;
-            }
         }
 
         public void countit(double input,int level)

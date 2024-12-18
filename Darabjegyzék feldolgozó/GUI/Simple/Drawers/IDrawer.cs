@@ -1,5 +1,6 @@
 ﻿using Darabjegyzék_feldolgozó.Database;
-using Darabjegyzék_feldolgozó.GUI.Other;
+using Darabjegyzék_feldolgozó.Database.Types.Filters;
+using Darabjegyzék_feldolgozó.GUI.Other.Filters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,6 @@ namespace Darabjegyzék_feldolgozó.GUI.Simple.Drawers
     public interface IDrawer
     {
         string NameOfFunc { get; }
-        void LinkFilter(FilterGUIHandler filter,TabControl Tab);
-        void Drawer(TabControl thistab, ToolStrip filtermenu, DatabaseInterface @interface);
+        void Drawer(TabControl thistab, DatabaseInterface @interface);
     }
 }

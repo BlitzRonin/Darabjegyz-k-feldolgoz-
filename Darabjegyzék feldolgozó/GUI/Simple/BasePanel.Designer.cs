@@ -34,19 +34,21 @@
             filtermenu = new ToolStrip();
             toolStripLabel1 = new ToolStripLabel();
             toolStripSeparator1 = new ToolStripSeparator();
-            IDmenu = new ToolStripDropDownButton();
-            Serialmenu = new ToolStripDropDownButton();
-            Levelmenu = new ToolStripDropDownButton();
-            Itemmenu = new ToolStripDropDownButton();
-            Quantitymenu = new ToolStripDropDownButton();
-            UMmenu = new ToolStripDropDownButton();
-            Kindmenu = new ToolStripDropDownButton();
-            PTYPmenu = new ToolStripDropDownButton();
-            ValidFrommenu = new ToolStripDropDownButton();
-            ValidTomenu = new ToolStripDropDownButton();
+            IDmenu = new ToolStripButton();
+            Serialmenu = new ToolStripButton();
+            Levelmenu = new ToolStripButton();
+            Itemmenu = new ToolStripButton();
+            Quantitymenu = new ToolStripButton();
+            UMmenu = new ToolStripButton();
+            Kindmenu = new ToolStripButton();
+            PTYPmenu = new ToolStripButton();
+            ValidFrommenu = new ToolStripButton();
+            ValidTomenu = new ToolStripButton();
             toolStripSeparator2 = new ToolStripSeparator();
-            Resetbutton = new ToolStripButton();
+            Resebutton = new ToolStripButton();
             toolStripSeparator3 = new ToolStripSeparator();
+            Statuslabel = new ToolStripLabel();
+            Status = new ToolStripLabel();
             filtermenu.SuspendLayout();
             SuspendLayout();
             // 
@@ -65,16 +67,17 @@
             Tab.Location = new Point(3, 51);
             Tab.Name = "Tab";
             Tab.SelectedIndex = 0;
-            Tab.Size = new Size(799, 526);
+            Tab.Size = new Size(799, 523);
             Tab.TabIndex = 5;
+            Tab.Selected += Tab_Selected;
             // 
             // filtermenu
             // 
-            filtermenu.Items.AddRange(new ToolStripItem[] { toolStripLabel1, toolStripSeparator1, IDmenu, Serialmenu, Levelmenu, Itemmenu, Quantitymenu, UMmenu, Kindmenu, PTYPmenu, ValidFrommenu, ValidTomenu, toolStripSeparator2, Resetbutton, toolStripSeparator3 });
+            filtermenu.Items.AddRange(new ToolStripItem[] { toolStripLabel1, toolStripSeparator1, IDmenu, Serialmenu, Levelmenu, Itemmenu, Quantitymenu, UMmenu, Kindmenu, PTYPmenu, ValidFrommenu, ValidTomenu, toolStripSeparator2, Resebutton, toolStripSeparator3, Statuslabel, Status });
             filtermenu.Location = new Point(0, 0);
             filtermenu.Name = "filtermenu";
             filtermenu.Size = new Size(802, 25);
-            filtermenu.TabIndex = 14;
+            filtermenu.TabIndex = 16;
             filtermenu.Text = "toolStrip1";
             // 
             // toolStripLabel1
@@ -94,8 +97,9 @@
             IDmenu.Image = (Image)resources.GetObject("IDmenu.Image");
             IDmenu.ImageTransparentColor = Color.Magenta;
             IDmenu.Name = "IDmenu";
-            IDmenu.Size = new Size(31, 22);
+            IDmenu.Size = new Size(23, 22);
             IDmenu.Text = "ID";
+            IDmenu.Click += IDmenu_Click;
             // 
             // Serialmenu
             // 
@@ -103,8 +107,9 @@
             Serialmenu.Image = (Image)resources.GetObject("Serialmenu.Image");
             Serialmenu.ImageTransparentColor = Color.Magenta;
             Serialmenu.Name = "Serialmenu";
-            Serialmenu.Size = new Size(48, 22);
+            Serialmenu.Size = new Size(39, 22);
             Serialmenu.Text = "Serial";
+            Serialmenu.Click += Serialmenu_Click;
             // 
             // Levelmenu
             // 
@@ -112,8 +117,9 @@
             Levelmenu.Image = (Image)resources.GetObject("Levelmenu.Image");
             Levelmenu.ImageTransparentColor = Color.Magenta;
             Levelmenu.Name = "Levelmenu";
-            Levelmenu.Size = new Size(47, 22);
+            Levelmenu.Size = new Size(38, 22);
             Levelmenu.Text = "Level";
+            Levelmenu.Click += Levelmenu_Click;
             // 
             // Itemmenu
             // 
@@ -121,8 +127,9 @@
             Itemmenu.Image = (Image)resources.GetObject("Itemmenu.Image");
             Itemmenu.ImageTransparentColor = Color.Magenta;
             Itemmenu.Name = "Itemmenu";
-            Itemmenu.Size = new Size(44, 22);
+            Itemmenu.Size = new Size(35, 22);
             Itemmenu.Text = "Item";
+            Itemmenu.Click += Itemmenu_Click;
             // 
             // Quantitymenu
             // 
@@ -130,8 +137,9 @@
             Quantitymenu.Image = (Image)resources.GetObject("Quantitymenu.Image");
             Quantitymenu.ImageTransparentColor = Color.Magenta;
             Quantitymenu.Name = "Quantitymenu";
-            Quantitymenu.Size = new Size(66, 22);
+            Quantitymenu.Size = new Size(57, 22);
             Quantitymenu.Text = "Quantity";
+            Quantitymenu.Click += Quantitymenu_Click;
             // 
             // UMmenu
             // 
@@ -139,8 +147,9 @@
             UMmenu.Image = (Image)resources.GetObject("UMmenu.Image");
             UMmenu.ImageTransparentColor = Color.Magenta;
             UMmenu.Name = "UMmenu";
-            UMmenu.Size = new Size(39, 22);
+            UMmenu.Size = new Size(30, 22);
             UMmenu.Text = "UM";
+            UMmenu.Click += UMmenu_Click;
             // 
             // Kindmenu
             // 
@@ -148,8 +157,9 @@
             Kindmenu.Image = (Image)resources.GetObject("Kindmenu.Image");
             Kindmenu.ImageTransparentColor = Color.Magenta;
             Kindmenu.Name = "Kindmenu";
-            Kindmenu.Size = new Size(44, 22);
+            Kindmenu.Size = new Size(35, 22);
             Kindmenu.Text = "Kind";
+            Kindmenu.Click += Kindmenu_Click;
             // 
             // PTYPmenu
             // 
@@ -157,8 +167,9 @@
             PTYPmenu.Image = (Image)resources.GetObject("PTYPmenu.Image");
             PTYPmenu.ImageTransparentColor = Color.Magenta;
             PTYPmenu.Name = "PTYPmenu";
-            PTYPmenu.Size = new Size(47, 22);
+            PTYPmenu.Size = new Size(38, 22);
             PTYPmenu.Text = "PTYP";
+            PTYPmenu.Click += PTYPmenu_Click;
             // 
             // ValidFrommenu
             // 
@@ -166,8 +177,9 @@
             ValidFrommenu.Image = (Image)resources.GetObject("ValidFrommenu.Image");
             ValidFrommenu.ImageTransparentColor = Color.Magenta;
             ValidFrommenu.Name = "ValidFrommenu";
-            ValidFrommenu.Size = new Size(76, 22);
+            ValidFrommenu.Size = new Size(67, 22);
             ValidFrommenu.Text = "Valid From";
+            ValidFrommenu.Click += ValidFrommenu_Click;
             // 
             // ValidTomenu
             // 
@@ -175,29 +187,42 @@
             ValidTomenu.Image = (Image)resources.GetObject("ValidTomenu.Image");
             ValidTomenu.ImageTransparentColor = Color.Magenta;
             ValidTomenu.Name = "ValidTomenu";
-            ValidTomenu.Size = new Size(60, 22);
+            ValidTomenu.Size = new Size(51, 22);
             ValidTomenu.Text = "Valid To";
             ValidTomenu.ToolTipText = "Valid To";
+            ValidTomenu.Click += ValidTomenu_Click;
             // 
             // toolStripSeparator2
             // 
             toolStripSeparator2.Name = "toolStripSeparator2";
             toolStripSeparator2.Size = new Size(6, 25);
             // 
-            // Resetbutton
+            // Resebutton
             // 
-            Resetbutton.DisplayStyle = ToolStripItemDisplayStyle.Text;
-            Resetbutton.Image = (Image)resources.GetObject("Resetbutton.Image");
-            Resetbutton.ImageTransparentColor = Color.Magenta;
-            Resetbutton.Name = "Resetbutton";
-            Resetbutton.Size = new Size(39, 22);
-            Resetbutton.Text = "Reset";
-            Resetbutton.Click += Resetbutton_Click;
+            Resebutton.DisplayStyle = ToolStripItemDisplayStyle.Text;
+            Resebutton.Image = (Image)resources.GetObject("Resebutton.Image");
+            Resebutton.ImageTransparentColor = Color.Magenta;
+            Resebutton.Name = "Resebutton";
+            Resebutton.Size = new Size(39, 22);
+            Resebutton.Text = "Reset";
+            Resebutton.Click += Resebutton_Click;
             // 
             // toolStripSeparator3
             // 
             toolStripSeparator3.Name = "toolStripSeparator3";
             toolStripSeparator3.Size = new Size(6, 25);
+            // 
+            // Statuslabel
+            // 
+            Statuslabel.Name = "Statuslabel";
+            Statuslabel.Size = new Size(42, 22);
+            Statuslabel.Text = "Status:";
+            // 
+            // Status
+            // 
+            Status.Name = "Status";
+            Status.Size = new Size(86, 22);
+            Status.Text = "toolStripLabel2";
             // 
             // BasePanel
             // 
@@ -222,18 +247,20 @@
         private ToolStrip filtermenu;
         private ToolStripLabel toolStripLabel1;
         private ToolStripSeparator toolStripSeparator1;
-        private ToolStripDropDownButton IDmenu;
-        private ToolStripDropDownButton Serialmenu;
-        private ToolStripDropDownButton Levelmenu;
-        private ToolStripDropDownButton Itemmenu;
-        private ToolStripDropDownButton Quantitymenu;
-        private ToolStripDropDownButton UMmenu;
-        private ToolStripDropDownButton Kindmenu;
-        private ToolStripDropDownButton PTYPmenu;
-        private ToolStripDropDownButton ValidFrommenu;
-        private ToolStripDropDownButton ValidTomenu;
         private ToolStripSeparator toolStripSeparator2;
-        private ToolStripButton Resetbutton;
+        private ToolStripButton Resebutton;
         private ToolStripSeparator toolStripSeparator3;
+        private ToolStripLabel Statuslabel;
+        private ToolStripLabel Status;
+        private ToolStripButton IDmenu;
+        private ToolStripButton Serialmenu;
+        private ToolStripButton Levelmenu;
+        private ToolStripButton Itemmenu;
+        private ToolStripButton Quantitymenu;
+        private ToolStripButton UMmenu;
+        private ToolStripButton Kindmenu;
+        private ToolStripButton PTYPmenu;
+        private ToolStripButton ValidFrommenu;
+        private ToolStripButton ValidTomenu;
     }
 }

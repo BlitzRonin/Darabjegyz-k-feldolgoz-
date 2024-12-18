@@ -24,28 +24,28 @@ namespace Darabjegyzék_feldolgozó.Factories.Statistics.Counter.Linear
             List<Countlevels> levels = new List<Countlevels>();
             for (int i = 0; i < @interface.Count; i++)
             {
-                if (filter.filterElement(id,@interface[i]))
+                if (@interface[i].Level > levels.Count)
                 {
-                    if (@interface[i].Level > levels.Count)
+                    levels.Add(new Countlevels(@interface[i].Level));
+                }
+                if (@interface[i].Level == 0)
+                {
+                    for (int j = i; j > 0; j--)
                     {
-                        levels.Add(new Countlevels(@interface[i].Level));
-                    }
-                    if (@interface[i].Level == 0)
-                    {
-                        for (int j = i; j > 0; j++)
+                        if (@interface[j].Level != 0 && filter.filterElement(id, @interface[j]))
                         {
-                            if (@interface[j].Level != 0)
-                            {
-                                levels[@interface[j].Level - 1].countzero();
-                                break;
-                            }
+                            levels[@interface[j].Level - 1].countzero();
+                            break;
                         }
                     }
-                    else
+                }
+                else
+                {
+                    if (filter.filterElement(id, @interface[i]))
                     {
                         levels[@interface[i].Level - 1].countlevel();
                     }
-                }    
+                }
             }
             return levels;
         }

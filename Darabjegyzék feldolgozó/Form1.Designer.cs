@@ -61,14 +61,14 @@
             // newBomToolStripMenuItem
             // 
             newBomToolStripMenuItem.Name = "newBomToolStripMenuItem";
-            newBomToolStripMenuItem.Size = new Size(180, 22);
+            newBomToolStripMenuItem.Size = new Size(145, 22);
             newBomToolStripMenuItem.Text = "New Bom";
             newBomToolStripMenuItem.Click += newBomToolStripMenuItem_Click;
             // 
             // manageBomToolStripMenuItem
             // 
             manageBomToolStripMenuItem.Name = "manageBomToolStripMenuItem";
-            manageBomToolStripMenuItem.Size = new Size(180, 22);
+            manageBomToolStripMenuItem.Size = new Size(145, 22);
             manageBomToolStripMenuItem.Text = "Manage Bom";
             manageBomToolStripMenuItem.Click += manageBomToolStripMenuItem_Click;
             // 

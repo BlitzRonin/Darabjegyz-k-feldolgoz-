@@ -2,6 +2,7 @@
 using Darabjegyzék_feldolgozó.Database.Types.Filters;
 using Darabjegyzék_feldolgozó.Database.Types.Machines;
 using Darabjegyzék_feldolgozó.Factories.Preppers;
+using System;
 using System.IO;
 
 namespace Darabjegyzék_feldolgozó.Database
@@ -23,8 +24,8 @@ namespace Darabjegyzék_feldolgozó.Database
 
         public void removeThis(int index)
         {
+            Filtering.removeMachine(machines.ElementAt(index).Id);
             machines.RemoveAt(index);
-            Filtering.removeMachine(machines[machines.Count - 1].Id);
         }
 
         public void removeThis(string id)
@@ -36,7 +37,7 @@ namespace Darabjegyzék_feldolgozó.Database
                     machines.RemoveAt(i);
                 }
             }
-            Filtering.Active.RemoveFilter(id);
+            Filtering.removeMachine(id);
         }
 
         //Adds a new BOM into the program
@@ -66,7 +67,6 @@ namespace Darabjegyzék_feldolgozó.Database
                 if (!prepit.Duplic)
                 {
                     addRaw(prepit.BomStream);
-                    Filtering.Active.AddFilter(machines[machines.Count - 1].Id);
                     addTree();
                     Filtering.addMachine(machines[machines.Count - 1]);
                 }

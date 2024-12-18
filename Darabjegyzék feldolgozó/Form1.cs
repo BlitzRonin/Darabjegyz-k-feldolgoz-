@@ -1,7 +1,9 @@
 using Darabjegyzék_feldolgozó.Database;
 using Darabjegyzék_feldolgozó.GUI;
 using Darabjegyzék_feldolgozó.GUI.Compare;
+using Darabjegyzék_feldolgozó.GUI.Other.Filters;
 using Darabjegyzék_feldolgozó.GUI.Simple.Drawers;
+using System.Reflection.PortableExecutable;
 
 namespace Darabjegyzék_feldolgozó
 {
@@ -16,6 +18,7 @@ namespace Darabjegyzék_feldolgozó
         private BasePanel bompanel;
         private BasePanel commonpanel;
         private BasePanel levelpanel;
+        private FilterGUIHandler handler;
 
         public Form1()
         {
@@ -24,6 +27,23 @@ namespace Darabjegyzék_feldolgozó
             path = Application.StartupPath;
             dataadded += checkfirst;
             databaseInterface.Filtering.filteringevent += checkfirst;
+            fixhandler();
+            setfilter();
+        }
+
+        private void fixhandler()
+        {
+            handler = new FilterGUIHandler(databaseInterface.Filtering);
+            Controls.Add(handler["Level"]);
+            Controls.Add(handler["Item"]);
+            Controls.Add(handler["Quantitity"]);
+            Controls.Add(handler["UM"]);
+            Controls.Add(handler["Id"]);
+            Controls.Add(handler["Kind"]);
+            Controls.Add(handler["PTYP"]);
+            Controls.Add(handler["Validfrom"]);
+            Controls.Add(handler["Validto"]);
+            Controls.Add(handler["Serial"]);
         }
 
         private void checkfirst(object sender, EventArgs e)
@@ -48,7 +68,7 @@ namespace Darabjegyzék_feldolgozó
                     if (openFileDialog.ShowDialog() == DialogResult.OK)
                     {
                         await multiselectfiles(openFileDialog.FileNames);
-                        dataadded?.Invoke(Controls[0], EventArgs.Empty);
+                        adddata();
                     }
                     else
                     {
@@ -59,6 +79,18 @@ namespace Darabjegyzék_feldolgozó
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void adddata()
+        {
+            if (!typeof(FilterGUI).IsAssignableFrom(Controls[0].GetType()))
+            {
+                dataadded?.Invoke(Controls[0], EventArgs.Empty);
+            }
+            else
+            {
+                dataadded?.Invoke(Controls[1], EventArgs.Empty);
             }
         }
 
@@ -84,7 +116,7 @@ namespace Darabjegyzék_feldolgozó
         {
             if (!Controls.Contains(commonpanel))
             {
-                commonpanel = new BasePanel(new BomPrinterDraw(),databaseInterface);
+                commonpanel = new BasePanel(new BomPrinterDraw(), handler);
                 Controls.Add(commonpanel);
             }
             commonpanel.PrintIt(databaseInterface);
@@ -92,9 +124,9 @@ namespace Darabjegyzék_feldolgozó
 
         private void bOMGyakoriságToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (!Controls.Contains(commonpanel))
+            if (!Controls.Contains(bompanel))
             {
-                bompanel = new BasePanel(new CommonPrinterDraw(), databaseInterface);
+                bompanel = new BasePanel(new CommonPrinterDraw(), handler);
                 Controls.Add(bompanel);
             }
             bompanel.PrintIt(databaseInterface);
@@ -102,9 +134,9 @@ namespace Darabjegyzék_feldolgozó
 
         private void szintKimutatásToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (!Controls.Contains(commonpanel))
+            if (!Controls.Contains(levelpanel))
             {
-                levelpanel = new BasePanel(new LevelPrinterDraw(), databaseInterface);
+                levelpanel = new BasePanel(new LevelPrinterDraw(), handler);
                 Controls.Add(levelpanel);
             }
             levelpanel.PrintIt(databaseInterface);
@@ -114,7 +146,7 @@ namespace Darabjegyzék_feldolgozó
         {
             if (!Controls.Contains(compareprinter))
             {
-                compareprinter = new CompareTreePrinter(databaseInterface);
+                compareprinter = new CompareTreePrinter(databaseInterface, handler);
                 Controls.Add(compareprinter);
             }
             compareprinter.PrintIt(databaseInterface);
@@ -124,10 +156,27 @@ namespace Darabjegyzék_feldolgozó
         {
             if (!Controls.Contains(rawpanel))
             {
-                rawpanel = new BasePanel(new RawPrinterDraw(), databaseInterface);
+                rawpanel = new BasePanel(new RawPrinterDraw(), handler);
                 Controls.Add(rawpanel);
             }
             rawpanel.PrintIt(databaseInterface);
+        }
+
+        private void CloseFilter(object sender, EventArgs e)
+        {
+            if (typeof(FilterGUI).IsAssignableFrom(Controls[0].GetType()))
+            {
+                ((FilterGUI)Controls[0]).FilterGUI_Leave(this, EventArgs.Empty);
+            }
+        }
+
+        private void setfilter()
+        {
+            Click += CloseFilter;
+            menuStrip1.Click += CloseFilter;
+            statisticsToolStripMenuItem.Click += CloseFilter;
+            dataToolStripMenuItem.Click += CloseFilter;
+            fToolStripMenuItem.Click += CloseFilter;
         }
     }
 }

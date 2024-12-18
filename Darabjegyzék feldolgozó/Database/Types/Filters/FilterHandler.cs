@@ -1,12 +1,12 @@
 ﻿using Darabjegyzék_feldolgozó.Database.Types.Machines;
 using Darabjegyzék_feldolgozó.GUI;
-using Darabjegyzék_feldolgozó.GUI.Other;
 
 namespace Darabjegyzék_feldolgozó.Database.Types.Filters
 {
     public class FilterHandler
     {
         public event EventHandler filteringevent;
+        public Dictionary<string,string> actualfilters;    
         public Filter Active { get; }
         public Filtering Level { get; }
         public Filtering Item { get; }
@@ -18,6 +18,7 @@ namespace Darabjegyzék_feldolgozó.Database.Types.Filters
         public Filtering Validfrom { get; }
         public Filtering Validto { get; }
         public Filtering Serial { get; }
+
 
         public FilterHandler() 
         { 
@@ -32,6 +33,7 @@ namespace Darabjegyzék_feldolgozó.Database.Types.Filters
             Validfrom = new Filtering();
             Validto = new Filtering();
             Serial = new Filtering();
+            actualfilters = new Dictionary<string,string>();
         }
 
         public void addMachine(DMachine machine)
@@ -138,79 +140,139 @@ namespace Darabjegyzék_feldolgozó.Database.Types.Filters
             Serial.RemoveFilter(id);
         }
 
-        public void setElement(object sender, EventArgs e)
+        public void setElement(object sender, FilterSetterArgs e)
         {
-            IFilterable filter = (IFilterable)sender;
-            MessageBox.Show(filter.Filtername+" "+filter.Category+" "+filter.SelectedMachineId);
-            switch (filter.Category)
+            for (int i = 0; i < e.filters.Count; i++)
             {
-                case "IDmenu":
-                    Id[filter.SelectedMachineId].setFilter(filter.Filtername);
-                break;
-                case "Serialmenu":
-                    Serial[filter.SelectedMachineId].setFilter(filter.Filtername);
-                break;
-                case "Levelmenu":
-                    Level[filter.SelectedMachineId].setFilter(filter.Filtername);
-                break;
-                case "Itemmenu":
-                    Item[filter.SelectedMachineId].setFilter(filter.Filtername);
-                break;
-                case "Quantitymenu":
-                    Quantity[filter.SelectedMachineId].setFilter(filter.Filtername);
-                break;
-                case "UMmenu":
-                    UM[filter.SelectedMachineId].setFilter(filter.Filtername);
-                break;
-                case "Kindmenu":
-                    Kind[filter.SelectedMachineId].setFilter(filter.Filtername);
-                break;
-                case "PTYPmenu":
-                    PTYP[filter.SelectedMachineId].setFilter(filter.Filtername);
-                break;
-                case "ValidFrommenu":
-                    Validfrom[filter.SelectedMachineId].setFilter(filter.Filtername);
-                break;
-                case "ValidTomenu":
-                    Validto[filter.SelectedMachineId].setFilter(filter.Filtername);
-                break;
+                for (int j = 0; j < e.machine.Count; j++)
+                {
+                    switch (e.type)
+                    {
+                        case "Id":
+                            if(Id.Contains(e.machine[j]))
+                            {
+                                Id[e.machine[j]].setFilter(e.filters[i]);
+                            }
+                            break;
+                        case "Serial":
+                            if (Serial.Contains(e.machine[j]))
+                            {
+                                Serial[e.machine[j]].setFilter(e.filters[i]);
+                            }
+                            break;
+                        case "Level":
+                            if (Level.Contains(e.machine[j]))
+                            {
+                                Level[e.machine[j]].setFilter(e.filters[i]);
+                            }
+                            break;
+                        case "Item":
+                            if (Item.Contains(e.machine[j]))
+                            {
+                                Item[e.machine[j]].setFilter(e.filters[i]);
+                            }
+                            break;
+                        case "Quantitity":
+                            if (Quantity.Contains(e.machine[j]))
+                            {
+                                Quantity[e.machine[j]].setFilter(e.filters[i]);
+                            }
+                            break;
+                        case "UM":
+                            if (UM.Contains(e.machine[j]))
+                            {
+                                UM[e.machine[j]].setFilter(e.filters[i]);
+                            }
+                            break;
+                        case "Kind":
+                            if (Kind.Contains(e.machine[j]))
+                            {
+                                Kind[e.machine[j]].setFilter(e.filters[i]);
+                            }
+                            break;
+                        case "PTYP":
+                            if (PTYP.Contains(e.machine[j]))
+                            {
+                                PTYP[e.machine[j]].setFilter(e.filters[i]);
+                            }
+                            break;
+                        case "Validfrom":
+                            if (Validfrom.Contains(e.machine[j]))
+                            {
+                                Validfrom[e.machine[j]].setFilter(e.filters[i]);
+                            }
+                            break;
+                        case "Validto":
+                            if (Validto.Contains(e.machine[j]))
+                            {
+                                Validto[e.machine[j]].setFilter(e.filters[i]);
+                            }
+                            break;
+                    }
+                }
             }
             filteringevent?.Invoke(sender, EventArgs.Empty);
         }
 
-        public void resetFilter(object sender, EventArgs e)
+        public void resetFilter(IPrinter thisprinter,string machineid)
         {
-            IFilterable printer = (IFilterable)sender;
-            Level[printer.SelectedMachineId].ResetFilter();
-            Item[printer.SelectedMachineId].ResetFilter();
-            Quantity[printer.SelectedMachineId].ResetFilter();
-            UM[printer.SelectedMachineId].ResetFilter();
-            Id[printer.SelectedMachineId].ResetFilter();
-            Kind[printer.SelectedMachineId].ResetFilter();
-            PTYP[printer.SelectedMachineId].ResetFilter();
-            Validfrom[printer.SelectedMachineId].ResetFilter();
-            Validto[printer.SelectedMachineId].ResetFilter();
-            Serial[printer.SelectedMachineId].ResetFilter();
-            filteringevent?.Invoke(printer, EventArgs.Empty);
+            Level[machineid].ResetFilter();
+            Item[machineid].ResetFilter();
+            Quantity[machineid].ResetFilter();
+            UM[machineid].ResetFilter();
+            Id[machineid].ResetFilter();
+            Kind[machineid].ResetFilter();
+            PTYP[machineid].ResetFilter();
+            Validfrom[machineid].ResetFilter();
+            Validto[machineid].ResetFilter();
+            Serial[machineid].ResetFilter();
+            filteringevent?.Invoke(thisprinter, EventArgs.Empty);
+            actualfilters.Clear();
         }
 
         public bool filterElement(string id,Raw thisraw)
         { 
-            bool thisfilter = true;
-            if (Level[id].Filtered)
+            if (!Level[id][thisraw.Level.ToString()])
             {
-                thisfilter = Level[id][thisraw.Level.ToString()];
-                thisfilter = Item[id][thisraw.Item.ToString()];
-                thisfilter = Quantity[id][thisraw.Quantity.ToString()];
-                thisfilter = UM[id][thisraw.UM];
-                thisfilter = Id[id][thisraw.Id];
-                thisfilter = Kind[id][thisraw.Kind.ToString()];
-                thisfilter = PTYP[id][thisraw.PTYP.ToString()];
-                thisfilter = Validfrom[id][thisraw.Validfrom.ToString()];
-                thisfilter = Validto[id][thisraw.Validto.ToString()];
-                thisfilter = Serial[id][thisraw.Serial];
+                return false;
             }
-            return thisfilter;
+            if (!Item[id][thisraw.Item.ToString()])
+            {
+                return false;
+            }
+            if (!Quantity[id][thisraw.Quantity.ToString()])
+            {
+                return false;
+            }
+            if (!UM[id][thisraw.UM])
+            {
+                return false;
+            }
+            if (!Id[id][thisraw.Id])
+            {
+                return false;
+            }
+            if (!Kind[id][thisraw.Kind.ToString()])
+            {
+                return false;
+            }
+            if (!PTYP[id][thisraw.PTYP.ToString()])
+            {
+                return false;
+            }
+            if (!Validfrom[id][thisraw.Validfrom.ToString()])
+            {
+                return false;
+            }
+            if (!Validto[id][thisraw.Validto.ToString()])
+            {
+                return false;
+            }
+            if (!Serial[id][thisraw.Serial])
+            {
+                return false;
+            }
+            return true;
         }
     }
 }

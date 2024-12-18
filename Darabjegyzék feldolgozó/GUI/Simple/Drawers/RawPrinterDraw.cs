@@ -1,48 +1,28 @@
 ﻿using Darabjegyzék_feldolgozó.Database;
+using Darabjegyzék_feldolgozó.Database.Types.Filters;
 using Darabjegyzék_feldolgozó.Database.Types.Machines;
-using Darabjegyzék_feldolgozó.GUI.Other;
+using Darabjegyzék_feldolgozó.GUI.Other.Filters;
 namespace Darabjegyzék_feldolgozó.GUI.Simple.Drawers
 {
     public class RawPrinterDraw : IDrawer
     {
         public string NameOfFunc { get { return "Nyers Adatok"; } }
 
-        private FilterGUIHandler filter;
-
-        public void LinkFilter(FilterGUIHandler filter,TabControl Tab)
-        {
-            this.filter = filter;
-            Tab.SelectedIndexChanged += filterwrite;
-        }
-
-        public void Drawer(TabControl Tab , ToolStrip filtermenu, DatabaseInterface @interface)
+        public void Drawer(TabControl Tab , DatabaseInterface @interface)
         {
             Tab.TabPages.Clear();
             for (int i = 0; i < @interface.Machines.Count; i++)
             {
-                if (filter.Filter.Active[@interface.Machines[i].Id])
+                if (@interface.Filtering.Active[@interface.Machines[i].Id])
                 {
                     Tab.TabPages.Add(new TabPage());
                     Tab.TabPages[Tab.TabCount - 1].Text = @interface.Machines[i].Id;
-                    DrawOne(@interface.Machines[i].Raws, Tab.TabPages[Tab.TabCount - 1]);
+                    DrawOne(@interface.Machines[i].Raws, Tab.TabPages[Tab.TabCount - 1],@interface.Filtering);
                 }          
             }
-            if (Tab.TabCount != 0)
-            {
-                filter.fillfilter(Tab.SelectedTab.Text, Tab.TabCount);
-            }
         }
 
-        private void filterwrite(object sender,EventArgs e)
-        {
-            TabControl TempTab = (TabControl)sender;
-            if (TempTab.TabCount != 0)
-            {
-                filter.fillfilter(TempTab.SelectedTab.Text, TempTab.TabCount);
-            }
-        }
-
-        private void DrawOne(List<Raw> thisraw, TabPage page)
+        private void DrawOne(List<Raw> thisraw, TabPage page,FilterHandler handler)
         {
             ListView thisListView = setListView();
             page.Controls.Add(thisListView);
@@ -50,7 +30,10 @@ namespace Darabjegyzék_feldolgozó.GUI.Simple.Drawers
             thisListView.BeginUpdate();
             for (int i = 0; i < thisraw.Count; i++)
             {
-                thisListView.Items.Add(setItem(thisraw[i]));
+                if (handler.filterElement(page.Text, thisraw[i]))
+                {
+                    thisListView.Items.Add(setItem(thisraw[i]));
+                }              
             }
             thisListView.EndUpdate();
         }
